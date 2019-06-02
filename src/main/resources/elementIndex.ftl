@@ -37,10 +37,10 @@
         </el-pagination>
 
         <el-dialog title="添加" :visible.sync="addVisible" >
-            <el-form :model="${meta.name}Add" label-width="80px" ref="addForm" :rules="addFormRules" size="mini">
+            <el-form :model="${meta.dtoName}Add" label-width="80px" ref="addForm" :rules="addFormRules" size="mini">
                 <#list meta.dtoFields as field>
                     <el-form-item label="${field.label}" prop="${field.label}">
-                        <el-input v-model="${meta.dtoName}.${field.name}" ></el-input>
+                        <el-input v-model="${meta.dtoName}Add.${field.name}" ></el-input>
                     </el-form-item>
                 </#list>
             </el-form>
@@ -51,10 +51,10 @@
         </el-dialog>
 
         <el-dialog title="修改" :visible.sync="updateVisible" >
-            <el-form :model="${meta.name}Update" label-width="80px" ref="form" :rules="updateFormRules">
+            <el-form :model="${meta.dtoName}Update" label-width="80px" ref="form" :rules="updateFormRules">
                 <#list meta.dtoFields as field>
                     <el-form-item label="${field.label}" prop="${field.label}">
-                        <el-input v-model="${meta.dtoName}.${field.name}" ></el-input>
+                        <el-input v-model="${meta.dtoName}Update.${field.name}" ></el-input>
                     </el-form-item>
                 </#list>
             </el-form>
@@ -89,11 +89,16 @@
                     pageNumber: 1,
                     pageSize: 10,
                 },
-                ${meta.dtoName}:{
+                ${meta.dtoName}Add:{
                     <#list meta.dtoFields as field>
                         ${field.name},
                     </#list>
-                }
+                },
+                ${meta.dtoName}Update:{
+                    <#list meta.dtoFields as field>
+                        ${field.name},
+                    </#list>
+                },
                 addFormRules: {
 //                    ownerCode: [
 //                        {required: true, message: '不能为空', trigger: 'blur'},
@@ -142,14 +147,13 @@
 
             updateDialog(val){
                 this.updateVisible = true;
-
-            }
+            },
 
             handlerSubmit(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid){
                         if (formName ==="updateForm"){
-                            update(this.${meta.name}Update).then(response => {
+                            update(this.${meta.dtoName}Update).then(response => {
                                 Message({
                                     message: "修改成功",
                                     type: 'success',
@@ -157,7 +161,7 @@
                             });
                             this.init();
                         }else if (formName === "addForm"){
-                            add(this.${meta.name}Add).then(response => {
+                            add(this.${meta.dtoName}Add).then(response => {
                                 Message({
                                     message: "添加成功",
                                     type: 'success',

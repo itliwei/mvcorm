@@ -37,6 +37,11 @@ public class Config {
 	private String controllerPackage;
 	private String controllerSuffix = "Controller";
 
+	private String elementPackage = "/vue";
+	private String elementPath = "/vue";
+	private String elementSuffix = "index";
+	private String elementJSSuffix = "js";
+
 
 	public String getNodeDestFile() {
 		return nodeDestFile;
@@ -204,5 +209,37 @@ public class Config {
 
 	public void setControllerSuffix(String controllerSuffix) {
 		this.controllerSuffix = controllerSuffix;
+	}
+
+	public String getElementPackage() {
+		return elementPackage;
+	}
+
+	public void setElementPackage(String elementPackage) {
+		this.elementPackage = elementPackage;
+	}
+
+	public String getElementSuffix() {
+		return elementSuffix;
+	}
+
+	public void setElementSuffix(String elementSuffix) {
+		this.elementSuffix = elementSuffix;
+	}
+
+	public String getElementJSSuffix() {
+		return elementJSSuffix;
+	}
+
+	public void setElementJSSuffix(String elementJSSuffix) {
+		this.elementJSSuffix = elementJSSuffix;
+	}
+
+	public String getElementPath() {
+		return elementPath;
+	}
+
+	public void setElementPath(String elementPath) {
+		this.elementPath = elementPath;
 	}
 }

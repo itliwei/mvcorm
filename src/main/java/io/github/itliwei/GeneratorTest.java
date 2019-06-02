@@ -27,11 +27,15 @@ public class GeneratorTest {
         config.setPassword("Mysql2ol9");
         config.setUseLombok(true);
 
+        config.setElementPackage("/Users/vince/myproject/mvcorm/vue");
+        config.setElementPath("/Users/vince/myproject/mvcorm/vue");
+
         Generator.generate(config
-                , new VoHandler()
-                , new QueryModelHandler()
-                , new ServiceHandler()
-                , new ControllerHandler()
+//                , new VoHandler()
+//                , new QueryModelHandler()
+//                , new ServiceHandler()
+//                , new ControllerHandler()
+                , new ElementHandler()
 //               , new MysqlHandler(true)
         );
 

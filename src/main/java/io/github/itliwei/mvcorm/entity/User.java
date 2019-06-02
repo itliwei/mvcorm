@@ -4,6 +4,7 @@ package io.github.itliwei.mvcorm.entity;
 import io.github.itliwei.mvcorm.generator.annotation.Field;
 import io.github.itliwei.mvcorm.generator.annotation.Type;
 import io.github.itliwei.mvcorm.generator.annotation.controller.ControllerClass;
+import io.github.itliwei.mvcorm.generator.annotation.elementui.ElementClass;
 import io.github.itliwei.mvcorm.generator.annotation.query.Query;
 import io.github.itliwei.mvcorm.generator.annotation.query.QueryModel;
 import io.github.itliwei.mvcorm.generator.annotation.service.ServiceClass;
@@ -34,6 +35,7 @@ import static io.github.itliwei.mvcorm.entity.User.SIMPLE_VO;
 @Table(value = "tmp_user")
 @ServiceClass
 @ControllerClass(path = "api/user",desc = "用户接口")
+@ElementClass
 @ViewObject(groups = {SIMPLE_VO,SIMPLE_DTO})
 public class User extends IdEntity {
 
