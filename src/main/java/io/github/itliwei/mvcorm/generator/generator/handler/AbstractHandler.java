@@ -44,7 +44,7 @@ public abstract class AbstractHandler implements Handler {
 	protected void init() throws Exception {
 		freemarkerConfiguration = new Configuration(new Version(config.getFreemakerVersion()));
 		freemarkerConfiguration.setDefaultEncoding(config.getDefaultEncoding());
-		freemarkerConfiguration.setClassForTemplateLoading(getClass(), "/freemarker");
+		freemarkerConfiguration.setClassForTemplateLoading(getClass(), config.getTemplate());
 		genLog = new GenLog(config.getGenLogFile());
 	}
 

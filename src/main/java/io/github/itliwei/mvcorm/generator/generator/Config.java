@@ -21,7 +21,7 @@ public class Config {
 	private String password = "123456";
 
 	private String freemakerVersion = "2.3.0";
-	private String template = "freemarker";
+	private String template = "/";
 	private String defaultEncoding = "UTF-8";
 
 	/* nodejs */
@@ -35,6 +35,8 @@ public class Config {
 	private String serviceSuffix = "Service";
 
 	private String controllerPackage;
+	private String controllerSuffix = "Controller";
+
 
 	public String getNodeDestFile() {
 		return nodeDestFile;
@@ -194,5 +196,13 @@ public class Config {
 
 	public void setControllerPackage(String controllerPackage) {
 		this.controllerPackage = controllerPackage;
+	}
+
+	public String getControllerSuffix() {
+		return controllerSuffix;
+	}
+
+	public void setControllerSuffix(String controllerSuffix) {
+		this.controllerSuffix = controllerSuffix;
 	}
 }
