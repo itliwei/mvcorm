@@ -32,7 +32,7 @@ public class ${meta.className} implements Serializable {
 	@Field(label = "${field.label}"<#if field.order != 999>, order = ${field.order}</#if>)
 	private ${field.type} ${field.name};
 </#list>
-
+/* 扩展 */
 <#list meta.associationFields as field>
 	@Field(label = "${field.label}"<#if field.order != 999>, order = ${field.order}</#if>)
 	private ${field.type} ${field.name};

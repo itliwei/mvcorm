@@ -20,21 +20,21 @@ public class GeneratorTest {
         String projectPath = new File("").getAbsolutePath();
         Config config = new Config();
         config.setGenLogFile(Paths.get(System.getProperty("user.home"), "gen.log").toString());
-        config.setUrl("jdbc:mysql://106.13.146.82:3306/test?useSSL=false");
+        config.setUrl("jdbc:mysql://127.0.0.1:3306/test?useSSL=false");
         config.setEntityPackage("io.github.itliwei.mvcorm.entity");
 
         config.setUsername("root");
-        config.setPassword("Mysql2ol9");
+        config.setPassword("test");
         config.setUseLombok(true);
 
         config.setElementPackage("/Users/vince/myproject/mvcorm/vue");
         config.setElementPath("/Users/vince/myproject/mvcorm/vue");
 
         Generator.generate(config
-//                , new VoHandler()
-//                , new QueryModelHandler()
-//                , new ServiceHandler()
-//                , new ControllerHandler()
+                , new VoHandler()
+                , new QueryModelHandler()
+                , new ServiceHandler()
+                , new ControllerHandler()
                 , new ElementHandler()
 //               , new MysqlHandler(true)
         );

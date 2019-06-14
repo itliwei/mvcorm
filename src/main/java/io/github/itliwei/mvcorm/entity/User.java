@@ -22,26 +22,26 @@ import static io.github.itliwei.mvcorm.entity.User.SIMPLE_VO;
 
 /**
  * 用户表
- * Created by cheshun on 17/9/14.
+ * Created by liwei on 18/6/14.
  */
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 @Type(label = "用户")
-@QueryModel
 @Table(value = "tmp_user")
+@QueryModel
 @ServiceClass
 @ControllerClass(path = "api/user",desc = "用户接口")
 @ElementClass
 @ViewObject(groups = {SIMPLE_VO,SIMPLE_DTO})
 public class User extends IdEntity {
 
-    public static final String SIMPLE_VO = "ApplicationVo";
+    public static final String SIMPLE_VO = "UserVo";
 
-    public static final String SIMPLE_DTO = "ApplicationDto";
+    public static final String SIMPLE_DTO = "UserDto";
 
     @Field(label = "姓名")
     @Query({Condition.Operator.eq, Condition.Operator.in})
@@ -62,28 +62,4 @@ public class User extends IdEntity {
     @Query({Condition.Operator.eq, Condition.Operator.in})
     @View(groups = {SIMPLE_VO})
     private String address;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Long getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", jobId=" + jobId +
-                "} " + super.toString();
-    }
 }
