@@ -350,6 +350,372 @@
     
     }
     
+    queryModel对象
+    
+    package io.github.itliwei.mvcorm.entity.query;
+    
+    import java.io.Serializable;
+    
+    import io.github.itliwei.mvcorm.orm.opt.QueryModel;
+    
+    import lombok.Getter;
+    import lombok.Setter;
+    import lombok.Builder;
+    import lombok.NoArgsConstructor;
+    import lombok.AllArgsConstructor;
+    
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public class UserQueryModel  extends QueryModel implements Serializable {
+    	private Long idEQ;
+    
+    	private String usernameEQ;
+    
+    	private String usernameIN;
+    
+    	private Long jobIdEQ;
+    
+    	private Long jobIdIN;
+    
+    	private Integer ageEQ;
+    
+    	private Integer ageIN;
+    
+    	private String addressEQ;
+    
+    	private String addressIN;
+    
+    }
+    
+    service对象
+    
+    package io.github.itliwei.mvcorm.service;
+    
+    
+    import io.github.itliwei.mvcorm.entity.*;
+    import io.github.itliwei.mvcorm.orm.BaseService;
+    import org.springframework.stereotype.Service;
+    
+    
+    @Service
+    public class UserService extends BaseService<User> {
+    }
+    
+    
+    controller对象
+    
+    package io.github.itliwei.mvcorm.controller;
+    
+    
+    import io.github.itliwei.mvcorm.entity.*;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import io.github.itliwei.mvcorm.mvc.Resp;
+    import io.github.itliwei.mvcorm.service.UserService;
+    import io.github.itliwei.mvcorm.entity.query.UserQueryModel;
+    import org.springframework.web.bind.annotation.*;
+    import lombok.extern.slf4j.Slf4j;
+    import io.swagger.annotations.*;
+    import io.github.itliwei.mvcorm.orm.opt.Page;
+    
+    
+    
+    @Slf4j
+    @RestController
+    @RequestMapping("api/user")
+    @Api(value = "用户接口",description = "用户接口")
+    public class UserController {
+    
+        @Autowired
+        private UserService userService;
+    
+        @GetMapping("/info/{id}")
+        @ApiOperation(value = "根据ID查找",httpMethod = "GET")
+        public Resp<User> getById(@PathVariable long id) {
+            User result = userService.findById(id);
+           return Resp.success(result);
+        }
+    
+    
+        @PostMapping("/page/query")
+        @ApiOperation(value = "分页查找内容",httpMethod = "POST")
+        public Resp<Page<User>> pageQuery(UserQueryModel queryModel) {
+            Page<User> result = userService.findPage(queryModel);
+            return Resp.success(result);
+        }
+    
+        @PostMapping("/save")
+        @ApiOperation(value = "保存",httpMethod = "POST")
+        public Resp<User> save(User user) {
+            User result = userService.save(user);
+            return Resp.success(result);
+        }
+    
+        @PostMapping("/update")
+        @ApiOperation(value = "保存",httpMethod = "POST")
+        public Resp<User> update(User user) {
+            User result = userService.update(user);
+            return Resp.success(result);
+        }
+    
+        @GetMapping("/delete/{id}")
+        @ApiOperation(value = "根据ID删除",httpMethod = "GET")
+        public Resp<Integer> delete(@PathVariable long id) {
+            int result = userService.delete(id);
+            return Resp.success(result);
+        }
+    }
+    
+    
+    Element文件
+    
+    import request from '@/utils/request'
+    
+    export function getList(params) {
+        return request({
+            url: '/page/query',
+            method: 'POST',
+            params
+        })
+    }
+    
+    export function getInfo(id) {
+        return request({
+            url: '/info/'+id,
+            method: 'GET',
+        })
+    }
+    
+    
+    export function update(params) {
+        return request({
+            url: '/update',
+            method: 'POST',
+            params
+        })
+    }
+    
+    export function add(params) {
+        return request({
+            url: '/add',
+            method: 'POST',
+            params
+        })
+    }
+    
+    export function del(id){
+        return request({
+            url: '/info/'+id,
+            method: 'GET',
+        })
+    }
+    
+    
+    <template>
+        <div class="user-container">
+            <el-col :span="24" class="toolbar">
+                <el-form :inline="true" :model="userQueryModel"  size="mini">
+                    <el-form-item :span="6" label="姓名">
+                        <el-input v-model="userQueryModel.username" placeholder=""></el-input>
+                    </el-form-item>
+                    <el-form-item :span="6" label="jobId">
+                        <el-input v-model="userQueryModel.jobId" placeholder=""></el-input>
+                    </el-form-item>
+                    <el-form-item :span="6" label="年龄">
+                        <el-input v-model="userQueryModel.age" placeholder=""></el-input>
+                    </el-form-item>
+                    <el-form-item :span="6" label="地址">
+                        <el-input v-model="userQueryModel.address" placeholder=""></el-input>
+                    </el-form-item>
+                <el-form-item :span="6" >
+                    <el-button type="primary" v-on:click="getList" size="mini">查询</el-button>
+                </el-form-item>
+                </el-form>
+            </el-col>
+            <div>
+                <el-button type="danger" @click="addVisible=true" size="mini">添加</el-button>
+            </div>
+    
+            <el-table :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%;" size="mini">
+                <el-table-column type="index" width="50"></el-table-column>
+                    <el-table-column prop="username" label="姓名"></el-table-column>
+                    <el-table-column prop="jobId" label="jobId"></el-table-column>
+                    <el-table-column prop="age" label="年龄"></el-table-column>
+                    <el-table-column prop="address" label="地址"></el-table-column>
+                <el-table-column
+                        label="操作"
+                        width="100">
+                    <template slot-scope="scope">
+                        <el-button @click="getInfo(scope.row.id)" type="text" size="mini">查看</el-button>
+                        <el-button @click="updateDialog(scope.row)" type="text" size="mini">修改</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-pagination  style="float:right" background
+                            @current-change="handleCurrentChange"
+                            layout="prev, pager, next"
+                            :total="total">
+            </el-pagination>
+    
+            <el-dialog title="添加" :visible.sync="addVisible" >
+                <el-form :model="userDtoAdd" label-width="80px" ref="addForm" :rules="addFormRules" size="mini">
+                        <el-form-item label="姓名" prop="姓名">
+                            <el-input v-model="userDtoAdd.username" ></el-input>
+                        </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="handleClose('addForm')" size="mini">取 消</el-button>
+                    <el-button type="primary" @click="handlerSubmit('addForm')" size="mini">确 定</el-button>
+                </div>
+            </el-dialog>
+    
+            <el-dialog title="修改" :visible.sync="updateVisible" >
+                <el-form :model="userDtoUpdate" label-width="80px" ref="form" :rules="updateFormRules">
+                        <el-form-item label="姓名" prop="姓名">
+                            <el-input v-model="userDtoUpdate.username" ></el-input>
+                        </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="handleClose('updateForm')" size="mini">取 消</el-button>
+                    <el-button type="primary" @click="handlerSubmit('updateForm')" size="mini">确 定</el-button>
+                </div>
+            </el-dialog>
+        </div>
+    </template>
+    
+    <script>
+        import { mapGetters } from 'vuex'
+        import { Message, MessageBox } from 'element-ui'
+        import {getInfo,add,update,delete,getList} from '@/api/user'
+        import Axios from  'axios'
+    
+        const tableData = []
+        export default {
+            name: 'Org',
+            data() {
+                return {
+                    tableData,
+                    total : 0,
+                    addVisible: false,
+                    updateVisible: false,
+                    listLoading: false,
+                    userQueryModel:{
+                        username,
+                        jobId,
+                        age,
+                        address,
+                        pageNumber: 1,
+                        pageSize: 10,
+                    },
+                    userDtoAdd:{
+                            username,
+                    },
+                    userDtoUpdate:{
+                            username,
+                    },
+                    addFormRules: {
+    //                    ownerCode: [
+    //                        {required: true, message: '不能为空', trigger: 'blur'},
+    //                    ],
+    
+                    },
+                    updateFormRules: {
+        //                    ownerCode: [
+        //                        {required: true, message: '不能为空', trigger: 'blur'},
+        //                    ],
+    
+                    },
+                }
+            },
+    
+            created () {
+                this.init()
+            },
+    
+            methods:{
+                init() {
+                    this.getList();
+                },
+    
+                getList(){
+                    this.tableData = [];
+                    this.listLoading = true;
+                    getList(this.userQueryModel).then((res) => {
+                        res.data.data.forEach(item => {
+                            this.tableData.push(item)
+                        })
+                        this.total = res.data.total;
+                        this.listLoading = false;
+                    });
+                },
+    
+                getInfo(id){
+                    this.$router.push({path: '/user/info',query: {id: id}})
+    
+                },
+    
+                handleCurrentChange(val) {
+                    this.userQueryModel.pageNumber = val;
+                    this.getList();
+                },
+    
+                updateDialog(val){
+                    this.updateVisible = true;
+                },
+    
+                handlerSubmit(formName){
+                    this.$refs[formName].validate((valid) => {
+                        if (valid){
+                            if (formName ==="updateForm"){
+                                update(this.userDtoUpdate).then(response => {
+                                    Message({
+                                        message: "修改成功",
+                                        type: 'success',
+                                    });
+                                });
+                                this.init();
+                            }else if (formName === "addForm"){
+                                add(this.userDtoAdd).then(response => {
+                                    Message({
+                                        message: "添加成功",
+                                        type: 'success',
+                                    });
+                                });
+                                this.init();
+                            }
+    
+                        }
+                    });
+                },
+    
+                handleClose(formName) {
+                    this.addVisible = false;
+                    this.updateVisible = false;
+                    this.$refs[formName].resetFields();//将form表单重置
+                    this.$refs[formName].clearValidate();//将form表单重置
+                },
+    
+            }
+        }
+    </script>
+    
+    <style rel="stylesheet/scss" lang="scss" scoped>
+        .applicaton {
+        &-container {
+             margin: 30px;
+         }
+        &-text {
+             font-size: 30px;
+             line-height: 46px;
+         }
+        }
+    </style>
+
+   
+    
+    
     
     
     
