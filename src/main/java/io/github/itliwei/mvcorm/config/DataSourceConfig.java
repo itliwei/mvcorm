@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -37,9 +38,18 @@ public class DataSourceConfig {
 
 
     @Bean(name = "masterDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @ConfigurationProperties(prefix = "spring.datasource.master")
     @Primary
     public DataSource getMasterDataSource() throws Exception {
+        DruidDataSource dataSource = new DruidDataSource();
+        druidProperties.config(dataSource);
+        return dataSource;
+    }
+
+    @Bean(name = "slaveDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.slave")
+    @Primary
+    public DataSource getSlaveDataSource() throws Exception {
         DruidDataSource dataSource = new DruidDataSource();
         druidProperties.config(dataSource);
         return dataSource;
@@ -64,11 +74,16 @@ public class DataSourceConfig {
         return mfb.getObject();
     }
 
+    @Bean(name = "tm")
+    public DataSourceTransactionManager transactionManager() throws Exception {
+        return new DataSourceTransactionManager(getMasterDataSource());
+    }
+
     @Bean
     public CormConfig initConfig() throws Exception {
         CormConfig cormConfig = new CormConfig();
         cormConfig.addDefaultMasterMapper(mapper(getMasterDataSource()));
-        cormConfig.addDefaultSlaveMapper(mapper(getMasterDataSource()));
+        cormConfig.addDefaultSlaveMapper(mapper(getSlaveDataSource()));
         return cormConfig;
     }
 
