@@ -38,18 +38,8 @@ public class DataSourceConfig {
 
 
     @Bean(name = "masterDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.master")
     @Primary
     public DataSource getMasterDataSource() throws Exception {
-        DruidDataSource dataSource = new DruidDataSource();
-        druidProperties.config(dataSource);
-        return dataSource;
-    }
-
-    @Bean(name = "slaveDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.slave")
-    @Primary
-    public DataSource getSlaveDataSource() throws Exception {
         DruidDataSource dataSource = new DruidDataSource();
         druidProperties.config(dataSource);
         return dataSource;
@@ -83,7 +73,7 @@ public class DataSourceConfig {
     public CormConfig initConfig() throws Exception {
         CormConfig cormConfig = new CormConfig();
         cormConfig.addDefaultMasterMapper(mapper(getMasterDataSource()));
-        cormConfig.addDefaultSlaveMapper(mapper(getSlaveDataSource()));
+        cormConfig.addDefaultSlaveMapper(mapper(getMasterDataSource()));
         return cormConfig;
     }
 
