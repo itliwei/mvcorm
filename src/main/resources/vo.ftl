@@ -11,7 +11,6 @@ import lombok.Setter;
 </#if>
 
 import java.io.Serializable;
-import io.github.itliwei.mvcorm.generator.annotation.Field;
 import io.swagger.annotations.*;
 
 <#if meta.importJava??>

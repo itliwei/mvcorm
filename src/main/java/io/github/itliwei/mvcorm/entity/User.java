@@ -1,15 +1,15 @@
 package io.github.itliwei.mvcorm.entity;
 
 
-import io.github.itliwei.mvcorm.generator.annotation.Field;
-import io.github.itliwei.mvcorm.generator.annotation.Type;
-import io.github.itliwei.mvcorm.generator.annotation.controller.ControllerClass;
-import io.github.itliwei.mvcorm.generator.annotation.elementui.ElementClass;
-import io.github.itliwei.mvcorm.generator.annotation.query.Query;
-import io.github.itliwei.mvcorm.generator.annotation.query.QueryModel;
-import io.github.itliwei.mvcorm.generator.annotation.service.ServiceClass;
-import io.github.itliwei.mvcorm.generator.annotation.view.View;
-import io.github.itliwei.mvcorm.generator.annotation.view.ViewObject;
+import io.github.itliwei.generator.annotation.Field;
+import io.github.itliwei.generator.annotation.Type;
+import io.github.itliwei.generator.annotation.controller.ControllerClass;
+import io.github.itliwei.generator.annotation.elementui.ElementClass;
+import io.github.itliwei.generator.annotation.query.Query;
+import io.github.itliwei.generator.annotation.query.QueryModel;
+import io.github.itliwei.generator.annotation.service.ServiceClass;
+import io.github.itliwei.generator.annotation.view.View;
+import io.github.itliwei.generator.annotation.view.ViewObject;
 import io.github.itliwei.mvcorm.orm.IdEntity;
 import io.github.itliwei.mvcorm.orm.annotation.Table;
 import io.github.itliwei.mvcorm.orm.opt.Condition;

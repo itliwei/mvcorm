@@ -2,9 +2,9 @@ package io.github.itliwei;
 
 
 
-import io.github.itliwei.mvcorm.generator.generator.Config;
-import io.github.itliwei.mvcorm.generator.generator.Generator;
-import io.github.itliwei.mvcorm.generator.generator.handler.*;
+import io.github.itliwei.generator.generator.Config;
+import io.github.itliwei.generator.generator.Generator;
+import io.github.itliwei.generator.generator.handler.*;
 
 import java.io.File;
 import java.nio.file.Paths;
