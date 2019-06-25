@@ -23,7 +23,7 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 		super.init();
 		ConfigChecker.notBlank(config.getControllerSuffix(), "config controllerSuffix is miss");
 		/* 初始化文件夹 */
-		controllerPackage = config.getEntityPackage().substring(0,config.getEntityPackage().lastIndexOf("."))+".controller";
+		controllerPackage = config.getControllerPackage();
 		String dir = PackageUtil.getDir(config.getEntityPackage());
 		controllerPath = dir.substring(0,dir.indexOf("target/classes"))
 				+"src"+File.separator+"main"+File.separator+"java"

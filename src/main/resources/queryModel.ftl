@@ -3,6 +3,7 @@ package ${meta.queryModelPackage};
 import java.io.Serializable;
 
 import io.github.itliwei.mvcorm.orm.opt.QueryModel;
+import io.swagger.annotations.*;
 <#if meta.useLombok>
 
 import lombok.Getter;
@@ -23,6 +24,7 @@ import ${importFullType};
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "${meta.type}", description = "${meta.type}")
 </#if>
 public class ${meta.type}  extends QueryModel implements Serializable {
 	<#if meta.idEntity??>
@@ -30,7 +32,7 @@ public class ${meta.type}  extends QueryModel implements Serializable {
 	</#if>
 	<#if meta.queryModelFields??>
 	<#list meta.queryModelFields as queryModelField>
-
+	@ApiModelProperty
 	private ${queryModelField.type}<#if queryModelField.array>[]</#if> ${queryModelField.name};
 	</#list>
 	</#if>

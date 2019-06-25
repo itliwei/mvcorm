@@ -26,7 +26,7 @@ public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 		super.init();
 		ConfigChecker.notBlank(config.getQueryModelSuffix(), "config queryModelSuffix is miss");
 		/* 初始化文件夹 */
-		queryModelPackage = config.getEntityPackage()+".query";
+		queryModelPackage = config.getQueryModelPackage();
 		String dir = PackageUtil.getDir(config.getEntityPackage());
 		queryModelPath = dir.substring(0,dir.indexOf("target/classes"))
 				+"src"+File.separator+"main"+File.separator+"java"

@@ -23,7 +23,7 @@ public class ServiceHandler extends ScopedHandler<ServiceMeta> {
 		super.init();
 		ConfigChecker.notBlank(config.getServiceSuffix(), "config serviceSuffix is miss");
 		/* 初始化文件夹 */
-		servicePackage = config.getEntityPackage().substring(0,config.getEntityPackage().lastIndexOf("."))+".service";
+		servicePackage = config.getServicePackage();
 		String dir = PackageUtil.getDir(config.getEntityPackage());
 		servicePath = dir.substring(0,dir.indexOf("target/classes"))
 				+"src"+File.separator+"main"+File.separator+"java"

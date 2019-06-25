@@ -32,7 +32,7 @@ public class VoHandler extends AbstractHandler {
 	@Override
 	protected void init() throws Exception {
 		super.init();
-		this.voPackage = config.getEntityPackage()+".vo";
+		this.voPackage = config.getVoPackage();
 
 		String targetDir = PackageUtil.getDir(config.getEntityPackage());
 		dir = targetDir.substring(0,targetDir.indexOf("target/classes"))
