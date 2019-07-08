@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.itliwei</groupId>
 	<artifactId>mvcorm-spring-boot-starter</artifactId>
-	<version>0.0.2-RELEASE</version>
+	<version>0.0.3-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -67,8 +67,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.0.28</version>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.17</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -95,7 +95,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.35</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

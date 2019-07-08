@@ -31,8 +31,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Omega RESTful APIs")
-                .description("omega-rest-api")
+                .title("RESTful APIs")
+                .description("base-rest-api")
                 .contact("itliwei@163.com")
                 .version("1.0")
                 .build();
