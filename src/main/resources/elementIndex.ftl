@@ -84,19 +84,19 @@
                 listLoading: false,
                 ${meta.queryName}:{
                     <#list meta.queryFields as field>
-                    ${field.name},
+                    ${field.name}:null,
                     </#list>
                     pageNumber: 1,
                     pageSize: 10,
                 },
                 ${meta.dtoName}Add:{
                     <#list meta.dtoFields as field>
-                        ${field.name},
+                        ${field.name}:null,
                     </#list>
                 },
                 ${meta.dtoName}Update:{
                     <#list meta.dtoFields as field>
-                        ${field.name},
+                        ${field.name}:null,
                     </#list>
                 },
                 addFormRules: {
@@ -127,7 +127,7 @@
                 this.tableData = [];
                 this.listLoading = true;
                 getList(this.${meta.queryName}).then((res) => {
-                    res.data.data.forEach(item => {
+                    res.data.list.forEach(item => {
                         this.tableData.push(item)
                     })
                     this.total = res.data.total;
