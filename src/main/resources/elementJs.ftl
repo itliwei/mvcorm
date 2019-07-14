@@ -32,7 +32,7 @@ export function add(params) {
     })
 }
 
-export function delete(id) {
+export function del(id) {
     return request({
         url: '${meta.path}/info/'+id,
         method: 'GET',

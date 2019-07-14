@@ -69,12 +69,12 @@
 <script>
     import { mapGetters } from 'vuex'
     import { Message, MessageBox } from 'element-ui'
-    import {getInfo,add,update,delete,getList} from '@/api/${meta.name}'
+    import {getInfo,add,update,del,getList} from '@/api/${meta.name}'
     import Axios from  'axios'
 
     const tableData = []
     export default {
-        name: 'Org',
+        name: '${meta.name}',
         data() {
             return {
                 tableData,
