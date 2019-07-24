@@ -20,27 +20,27 @@ public class GeneratorTest {
         String projectPath = new File("").getAbsolutePath();
         Config config = new Config();
         config.setGenLogFile(Paths.get(System.getProperty("user.home"), "gen.log").toString());
-        config.setUrl("jdbc:mysql://10.16.9.34:3306/cas_db?useUnicode=true");
+        config.setUrl("jdbc:mysql://127.0.0.1:3306/cas_db?useUnicode=true");
         config.setEntityPackage("io.github.itliwei.mvcorm.entity");
         config.setQueryModelPackage("io.github.itliwei.mvcorm.query");
         config.setVoPackage("io.github.itliwei.mvcorm.vo");
         config.setServicePackage("io.github.itliwei.mvcorm.service");
         config.setControllerPackage("io.github.itliwei.mvcorm.controller");
 
-        config.setUsername("dev_sms");
-        config.setPassword("ziroomdb");
+        config.setUsername("root");
+        config.setPassword("root");
         config.setUseLombok(true);
 
         config.setElementPackage("/Users/vince/myproject/mvcorm/vue");
         config.setElementPath("/Users/vince/myproject/mvcorm/vue");
 
         Generator.generate(config
-//                , new VoHandler()
+                , new VoHandler()
 //                , new QueryModelHandler()
 //                , new ServiceHandler()
 //                , new ControllerHandler()
 //                , new ElementHandler()
-               , new MysqlHandler(true)
+//               , new MysqlHandler(true)
         );
 
     }
