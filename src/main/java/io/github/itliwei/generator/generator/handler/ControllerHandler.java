@@ -10,7 +10,9 @@ import io.github.itliwei.generator.generator.util.PackageUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ControllerHandler extends ScopedHandler<ControllerMeta> {
@@ -78,6 +80,11 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 			meta.setServiceClass(config.getServicePackage()+"."+entityClass.getSimpleName()+config.getServiceSuffix());
 			meta.setName(entityClass.getSimpleName() + config.getControllerSuffix());
 			meta.setControllerPackage(controllerPackage);
+			meta.setComponentClass(config.getComponentPackage()+"."+entityClass.getSimpleName()+config.getComponentSuffix());
+			Set<String> set = new HashSet<>();
+			set.add(config.getVoPackage()+"."+entityClass.getSimpleName()+config.getVoSuffix());
+			set.add(config.getVoPackage()+"."+entityClass.getSimpleName()+config.getDtoSuffix());
+			meta.setImportFullTypes(set);
 			return meta;
 		}
 	}

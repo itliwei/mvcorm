@@ -17,8 +17,8 @@ import lombok.*;
 
 import javax.persistence.Entity;
 
-import static io.github.itliwei.mvcorm.entity.User.SIMPLE_DTO;
-import static io.github.itliwei.mvcorm.entity.User.SIMPLE_VO;
+import static io.github.itliwei.mvcorm.entity.TestEntity.SIMPLE_DTO;
+import static io.github.itliwei.mvcorm.entity.TestEntity.SIMPLE_VO;
 
 /**
  * 用户表
@@ -37,14 +37,14 @@ import static io.github.itliwei.mvcorm.entity.User.SIMPLE_VO;
 @ControllerClass(path = "api/user",desc = "用户接口")
 @ElementClass
 @ViewObject(groups = {SIMPLE_VO,SIMPLE_DTO})
-public class User extends IdEntity {
+public class TestEntity extends IdEntity {
 
-    public static final String SIMPLE_VO = "UserVo";
+    public static final String SIMPLE_VO = "TestEntityVo";
 
-    public static final String SIMPLE_DTO = "UserDto";
+    public static final String SIMPLE_DTO = "TestEntityDto";
 
     @Field(label = "姓名")
-    @Query({Condition.Operator.eq, Condition.Operator.in})
+    @Query(value = {Condition.Operator.eq, Condition.Operator.in})
     @View(groups = {SIMPLE_VO,SIMPLE_DTO})
     private String username;
 

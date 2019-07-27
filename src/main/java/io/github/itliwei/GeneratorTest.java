@@ -26,6 +26,7 @@ public class GeneratorTest {
         config.setVoPackage("io.github.itliwei.mvcorm.vo");
         config.setServicePackage("io.github.itliwei.mvcorm.service");
         config.setControllerPackage("io.github.itliwei.mvcorm.controller");
+        config.setComponentPackage("io.github.itliwei.mvcorm.component");
 
         config.setUsername("root");
         config.setPassword("root");
@@ -36,9 +37,9 @@ public class GeneratorTest {
 
         Generator.generate(config
                 , new VoHandler()
-//                , new QueryModelHandler()
-//                , new ServiceHandler()
-//                , new ControllerHandler()
+                , new QueryModelHandler()
+                , new ServiceHandler()
+                , new ControllerHandler()
 //                , new ElementHandler()
 //               , new MysqlHandler(true)
         );

@@ -3,10 +3,13 @@ package ${meta.controllerPackage};
 
 import ${meta.controllerTypePackage};
 import org.springframework.beans.factory.annotation.Autowired;
+import io.github.itliwei.mvcorm.mvc.constants.ErrorCode;
 import io.github.itliwei.mvcorm.mvc.Resp;
+import io.github.itliwei.mvcorm.util.PageBuilder;
 import ${meta.entityClass};
 import ${meta.serviceClass};
 import ${meta.queryModelClass};
+import ${meta.componentClass};
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.annotations.*;
@@ -15,7 +18,7 @@ import io.github.itliwei.mvcorm.orm.opt.Page;
 
 <#if meta.importFullTypes??>
     <#list meta.importFullTypes as importFullType>
-    import ${importFullType};
+import ${importFullType};
     </#list>
 </#if>
 
@@ -28,40 +31,60 @@ public class ${meta.name} {
     @Autowired
     private ${meta.type}Service ${meta.typeName}Service;
 
+    @Autowired
+    private ${meta.type}Component ${meta.typeName}Component;
+
     @GetMapping("/info/{id}")
     @ApiOperation(value = "根据ID查找",httpMethod = "GET")
-    public Resp<${meta.type}> getById(@PathVariable long id) {
+    public Resp<${meta.type}Vo> getById(@PathVariable long id) {
         ${meta.type} result = ${meta.typeName}Service.findById(id);
-       return Resp.success(result);
+        if (result != null){
+            ${meta.type}Vo resultVo =  ${meta.typeName}Component.convert2${meta.type}Vo(result);
+            return Resp.success(resultVo);
+        }
+        return Resp.error(ErrorCode.DATA_NOT_EXIST,"id:"+id);
     }
 
 
     @PostMapping("/page/query")
     @ApiOperation(value = "分页查找内容",httpMethod = "POST")
-    public Resp<Page<${meta.type}>> pageQuery(${meta.type}QueryModel queryModel) {
+    public Resp<Page<${meta.type}Vo>> pageQuery(${meta.type}QueryModel queryModel) {
         Page<${meta.type}> result = ${meta.typeName}Service.findPage(queryModel);
+        Page<${meta.type}Vo> userVoPage = PageBuilder.copyAndConvert(result, ${meta.typeName}Component::convert2${meta.type}Vo);
         return Resp.success(result);
     }
 
     @PostMapping("/save")
     @ApiOperation(value = "保存",httpMethod = "POST")
-    public Resp<${meta.type}> save(${meta.type} ${meta.typeName}) {
-        ${meta.type} result = ${meta.typeName}Service.save(${meta.typeName});
-        return Resp.success(result);
+    public Resp<${meta.type}Vo> save(${meta.type}Dto ${meta.typeName}Dto) {
+        ${meta.type} entity = ${meta.typeName}Component.convert2${meta.type}(${meta.typeName}Dto);
+        ${meta.type} result = ${meta.typeName}Service.update(entity);
+        ${meta.type}Vo entityVo = ${meta.typeName}Component.convert2${meta.type}Vo(result);
+        if (entityVo != null){
+            return Resp.success(result);
+        }
+        return Resp.error(ErrorCode.SERVER,"保存数据失败");
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "保存",httpMethod = "POST")
-    public Resp<${meta.type}> update(${meta.type} ${meta.typeName}) {
-        ${meta.type} result = ${meta.typeName}Service.update(${meta.typeName});
-        return Resp.success(result);
+    @ApiOperation(value = "修改",httpMethod = "POST")
+    public Resp update(${meta.type}Dto ${meta.typeName}Dto) {
+        ${meta.type} entity = ${meta.typeName}Component.convert2${meta.type}(${meta.typeName}Dto);
+        ${meta.type} result = ${meta.typeName}Service.update(entity);
+        if (result != null) {
+            return Resp.success(result);
+        }
+        return Resp.error(ErrorCode.SERVER,"修改数据失败");
     }
 
     @GetMapping("/delete/{id}")
     @ApiOperation(value = "根据ID删除",httpMethod = "GET")
-    public Resp<Integer> delete(@PathVariable long id) {
+    public Resp delete(@PathVariable long id) {
         int result = ${meta.typeName}Service.delete(id);
-        return Resp.success(result);
+        if (result > 0) {
+            return Resp.success(result);
+        }
+        return Resp.error(ErrorCode.SERVER,"删除数据失败");
     }
 
 

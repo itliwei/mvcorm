@@ -1,6 +1,7 @@
 package io.github.itliwei.generator.annotation.query;
 
 
+import io.github.itliwei.generator.annotation.Field;
 import io.github.itliwei.mvcorm.orm.opt.Condition;
 
 import java.lang.annotation.*;
@@ -10,4 +11,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface Query {
     Condition.Operator[] value() default {};
+    
+    Field field() default @Field(label = "");
 }

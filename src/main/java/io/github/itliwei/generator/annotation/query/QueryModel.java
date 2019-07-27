@@ -1,5 +1,7 @@
 package io.github.itliwei.generator.annotation.query;
 
+import io.github.itliwei.generator.annotation.Field;
+
 import java.lang.annotation.*;
 
 @Target({ElementType.TYPE})

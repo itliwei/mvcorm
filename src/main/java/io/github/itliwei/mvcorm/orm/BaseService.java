@@ -21,19 +21,16 @@ public class BaseService<T> {
         return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public <T extends IdEntity> T save(T entity){
-        cService.save(entity);
-        return entity;
+    public <T extends IdEntity> int save(T entity){
+        return cService.save(entity);
     }
 
-    public <T extends IdEntity> T update(T entity){
-        cService.update(entity);
-        return entity;
+    public <T extends IdEntity> int  update(T entity){
+        return cService.update(entity);
     }
 
-    public <T extends IdEntity> T update(T entity,boolean useNull){
-        cService.update(entity,useNull);
-        return entity;
+    public <T extends IdEntity> int update(T entity,boolean useNull){
+        return cService.update(entity,useNull);
     }
 
     public <T extends IdEntity> T findById(Long id){

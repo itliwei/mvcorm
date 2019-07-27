@@ -5,6 +5,7 @@ import io.github.itliwei.generator.annotation.query.Query;
 import io.github.itliwei.generator.annotation.query.QueryModel;
 import io.github.itliwei.generator.generator.util.ClassHelper;
 import io.github.itliwei.generator.generator.util.PackageUtil;
+import io.github.itliwei.generator.generator.util.StringUtils;
 import io.github.itliwei.mvcorm.orm.IdEntity;
 import io.github.itliwei.generator.generator.meta.querymodel.QueryModelMeta;
 import io.github.itliwei.generator.generator.util.ConfigChecker;
@@ -12,9 +13,12 @@ import io.github.itliwei.mvcorm.orm.opt.Condition;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.lang.String.format;
 
 public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 
@@ -74,7 +78,7 @@ public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 								QueryModelMeta.QueryModelField queryModelField = new QueryModelMeta.QueryModelField();
 								queryModelField.setType(v.getType().getSimpleName());
 								queryModelField.setName(v.getName() + operator.getName());
-								if (operator.equals(Condition.Operator.in.getName())) {
+								if (operator.getName().equals(Condition.Operator.in.getName())) {
 									queryModelField.setArray(true);
 								}
 								meta.getQueryModelFields().add(queryModelField);
@@ -117,6 +121,21 @@ public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 	@Override
 	protected void postWrite(Class<?> entityClass) throws Exception {
 
+	}
+
+
+	private String handleFieldLabel(Field field, String label, String format) {
+		if (StringUtils.isBlank(label)) {
+			if (field.isAnnotationPresent(io.github.itliwei.generator.annotation.Field.class)) {
+				final io.github.itliwei.generator.annotation.Field fieldAnno = field.getDeclaredAnnotation(io.github.itliwei.generator.annotation.Field.class);
+				return fieldAnno.label();
+			} else {
+				logger.warn(format + ",默认使用 " + field.getName());
+				return field.getName();
+			}
+		} else {
+			return label;
+		}
 	}
 
 }

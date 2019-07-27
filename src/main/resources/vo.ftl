@@ -6,8 +6,7 @@ import ${import};
 	</#list>
 </#if>
 <#if meta.useLombok>
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 </#if>
 
 import java.io.Serializable;
@@ -22,6 +21,9 @@ import ${import};
 <#if meta.useLombok>
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 </#if>
 @ApiModel(value = "${meta.className}", description = "${meta.className}")
 public class ${meta.className} implements Serializable {
