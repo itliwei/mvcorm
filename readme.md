@@ -1,19 +1,24 @@
 ##一、功能介绍
 
-1、基于DDD模型，设计domain，自动生成数据库SQL脚本、DO、VO、Dao、Service、Controller以及基于ElementUI的前端页面与JS代码。
+基于DDD模型，设计domain，自动生成数据库SQL脚本、DO、VO、Dao、Service、Controller以及基于ElementUI的前端页面与JS代码。
 生成后，根据自己的业务需要修改调整对应的DO、VO以及Service、Controller逻辑。实现DDD设计模型，domain变更后，可重新生成，无任何影响。
+让用户，解放双手，不需要做一些乏味的增删改查和实体定义，从而只关心自己的业务代码实现，提高生产力。
 
-2、基于Springboot统一API日志输出
+主要功能如下：
 
-3、基于Springboot统一异常处理
-
-4、基于Springboot、Swagger统一接口文档
-
-5、基于Springboot统一返回结果响应码
-
-6、Controller提供最基本的根据ID查询、分页条件查询、修改、新增、删除API
-
-7、基于Mybatis自实现CORM框架，无需生成Mapper文件，提供基本SQL语句查询，也支持自定义SQL语句
+    1、统一的代码架构规范
+    
+    2、基于Springboot统一API日志输出
+    
+    3、基于Springboot统一异常处理
+    
+    4、基于Springboot、Swagger统一接口文档
+    
+    5、基于Springboot统一返回结果响应码
+    
+    6、Controller提供最基本的根据ID查询、分页条件查询、修改、新增、删除API
+    
+    7、基于Mybatis自实现CORM框架，无需生成Mapper文件，提供基本SQL语句查询，也支持自定义SQL语句
 
 
 ##二、技术介绍
@@ -752,6 +757,10 @@
         
     
     
+7、访问地址
     
+    应用起来后，可以通过： IP:port/doc.html 查看swagger接口文档！
+    
+        
     
     
