@@ -48,30 +48,30 @@ public class ${meta.name} {
 
     @PostMapping("/page/query")
     @ApiOperation(value = "分页查找内容",httpMethod = "POST")
-    public Resp<Page<${meta.type}Vo>> pageQuery(${meta.type}QueryModel queryModel) {
+    public Resp<Page<${meta.type}Vo>> pageQuery(@RequestBody ${meta.type}QueryModel queryModel) {
         Page<${meta.type}> result = ${meta.typeName}Service.findPage(queryModel);
-        Page<${meta.type}Vo> userVoPage = PageBuilder.copyAndConvert(result, ${meta.typeName}Component::convert2${meta.type}Vo);
-        return Resp.success(result);
+        Page<${meta.type}Vo> voPage = PageBuilder.copyAndConvert(result, ${meta.typeName}Component::convert2${meta.type}Vo);
+        return Resp.success(voPage);
     }
 
     @PostMapping("/save")
     @ApiOperation(value = "保存",httpMethod = "POST")
-    public Resp<${meta.type}Vo> save(${meta.type}Dto ${meta.typeName}Dto) {
+    public Resp<${meta.type}Vo> save(@RequestBody ${meta.type}Dto ${meta.typeName}Dto) {
         ${meta.type} entity = ${meta.typeName}Component.convert2${meta.type}(${meta.typeName}Dto);
-        ${meta.type} result = ${meta.typeName}Service.update(entity);
-        ${meta.type}Vo entityVo = ${meta.typeName}Component.convert2${meta.type}Vo(result);
-        if (entityVo != null){
-            return Resp.success(result);
+        int result = ${meta.typeName}Service.save(entity);
+        if (result > 0){
+            ${meta.type}Vo entityVo = ${meta.typeName}Component.convert2${meta.type}Vo(entity);
+            return Resp.success(entityVo);
         }
         return Resp.error(ErrorCode.SERVER,"保存数据失败");
     }
 
     @PostMapping("/update")
     @ApiOperation(value = "修改",httpMethod = "POST")
-    public Resp update(${meta.type}Dto ${meta.typeName}Dto) {
+    public Resp update(@RequestBody ${meta.type}Dto ${meta.typeName}Dto) {
         ${meta.type} entity = ${meta.typeName}Component.convert2${meta.type}(${meta.typeName}Dto);
-        ${meta.type} result = ${meta.typeName}Service.update(entity);
-        if (result != null) {
+        int result = ${meta.typeName}Service.update(entity);
+        if (result > 0) {
             return Resp.success(result);
         }
         return Resp.error(ErrorCode.SERVER,"修改数据失败");
