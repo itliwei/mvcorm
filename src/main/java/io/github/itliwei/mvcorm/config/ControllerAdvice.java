@@ -31,7 +31,6 @@ public class ControllerAdvice {
 	public Resp handleValidationException(ValidationException e, HttpServletRequest request, HttpServletResponse response)  {
 		log.error(String.format("remote host %s ,uri %s , referer %s", request.getRemoteHost(), request.getRequestURI(), request.getHeader(HttpHeaders.REFERER)));
 		log.error(e.getMessage(), e);
-		response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		return Resp.error(ErrorCode.SERVER,e.getMessage());
 	}
 
@@ -39,7 +38,6 @@ public class ControllerAdvice {
 	@ExceptionHandler(Exception.class)
 	public Resp handleException(Exception e, HttpServletResponse response)  {
 		log.error(e.getMessage(), e);
-		response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		return Resp.error(ErrorCode.SERVER,e.getMessage());
 	}
 
@@ -47,7 +45,6 @@ public class ControllerAdvice {
 	@ExceptionHandler(BusinessException.class)
 	public Resp handleBizException(BusinessException e, HttpServletResponse response)  {
 		log.error(e.getMessage(), e);
-		response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		return Resp.error(e.getCode(),e.getMessage());
 	}
 
@@ -57,7 +54,6 @@ public class ControllerAdvice {
 	@ResponseBody
 	public Resp handleNullPointException(NullPointerException e, HttpServletResponse response) {
 		log.error(e.getMessage(),e);
-		response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		return Resp.error(ErrorCode.SERVER,e.getMessage());
 	}
 
