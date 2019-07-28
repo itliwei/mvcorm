@@ -19,6 +19,8 @@
     6、Controller提供最基本的根据ID查询、分页条件查询、修改、新增、删除API
     
     7、基于Mybatis自实现CORM框架，无需生成Mapper文件，提供基本SQL语句查询，也支持自定义SQL语句
+    
+    8、数据库主从分离
 
 
 ##二、技术介绍
@@ -750,6 +752,20 @@
     </style>
 
    
+6、application.properties
+
+    支持读写分离，需要配置两个数据源
+    
+       spring.datasource.master.driver-class-name=com.mysql.jdbc.Driver
+       spring.datasource.master.url=jdbc:mysql://127.0.0.1:3306/cas_db?useUnicode=true
+       spring.datasource.master.username=111
+       spring.datasource.master.password=111
+       
+       spring.datasource.slave.driver-class-name=com.mysql.jdbc.Driver
+       spring.datasource.slave.url=jdbc:mysql://127.0.0.1:3306/cas_db?useUnicode=true
+       spring.datasource.slave.username=111
+       spring.datasource.slave.password=111
+          
    
 6、拓展
 
