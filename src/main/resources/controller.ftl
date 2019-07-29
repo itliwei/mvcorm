@@ -72,7 +72,7 @@ public class ${meta.name} {
         ${meta.type} entity = ${meta.typeName}Component.convert2${meta.type}(${meta.typeName}Dto);
         int result = ${meta.typeName}Service.update(entity);
         if (result > 0) {
-            return Resp.success(result);
+            return Resp.success();
         }
         return Resp.error(ErrorCode.SERVER,"修改数据失败");
     }
@@ -82,7 +82,7 @@ public class ${meta.name} {
     public Resp delete(@PathVariable long id) {
         int result = ${meta.typeName}Service.delete(id);
         if (result > 0) {
-            return Resp.success(result);
+            return Resp.success();
         }
         return Resp.error(ErrorCode.SERVER,"删除数据失败");
     }
