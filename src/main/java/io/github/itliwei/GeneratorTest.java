@@ -17,7 +17,6 @@ public class GeneratorTest {
     private static final String S = File.separator;
 
     public static void main(String[] args) {
-        String projectPath = new File("").getAbsolutePath();
         Config config = new Config();
         config.setGenLogFile(Paths.get(System.getProperty("user.home"), "gen.log").toString());
         config.setUrl("jdbc:mysql://127.0.0.1:3306/cas_db?useUnicode=true");

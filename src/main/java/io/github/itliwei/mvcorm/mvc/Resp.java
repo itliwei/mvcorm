@@ -2,21 +2,27 @@ package io.github.itliwei.mvcorm.mvc;
 
 import com.google.common.collect.Maps;
 import io.github.itliwei.mvcorm.mvc.constants.ErrorCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Map;
 
+@Getter
+@Setter
 public class Resp<T> implements Serializable {
     private static final String CODE_SUCCESS = "20000";
     private static final String MESSAGE_SUCCESS = "success";
     private String code;
     private String message;
+    private Long timestamp;
     private T data;
 
     private Resp(String code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
+        this.timestamp = System.currentTimeMillis();
     }
 
     public boolean isSuccess() {
@@ -57,34 +63,12 @@ public class Resp<T> implements Serializable {
         return new Resp(code.getCode(), code.getMessage(), "error");
     }
 
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return this.code;
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public T getData() {
-        return this.data;
-    }
 
     public String toString() {
         StringBuilder sb = new StringBuilder("Resp{");
         sb.append("code='").append(this.code).append('\'');
         sb.append(", message='").append(this.message).append('\'');
+        sb.append(", timestamp='").append(this.timestamp).append('\'');
         sb.append(", data=").append(this.data);
         sb.append('}');
         return sb.toString();

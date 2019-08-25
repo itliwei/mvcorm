@@ -24,7 +24,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("io.github.itliwei"))
+                .apis(RequestHandlerSelectors.basePackage(System.getProperty("swagger.base.package")))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -33,7 +33,6 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
                 .title("RESTful APIs")
                 .description("rest-api")
-                .contact("itliwei@163.com")
                 .version("1.0")
                 .build();
     }
