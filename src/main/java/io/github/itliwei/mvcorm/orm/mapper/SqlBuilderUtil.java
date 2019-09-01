@@ -251,9 +251,10 @@ public class SqlBuilderUtil {
         for (int j = 0; j < orList.size(); j++) {
             Condition c = orList.get(j);
             String alias = c.getAlias();
-            Method getter = findGetterMethod(c.getProperty(), clazz);
-            String columnName = findColumnName(clazz, getter, c.getProperty());
-            String jdbcType = findJdbcType(clazz, getter, c.getProperty());
+            Class<?> localClazz = localEntities.get().get(alias);
+            Method getter = findGetterMethod(c.getProperty(), localClazz);
+            String columnName = findColumnName(localClazz, getter, c.getProperty());
+            String jdbcType = findJdbcType(localClazz, getter, c.getProperty());
             if (c.getOperator() == Condition.Operator.in) {
                 String in = whereIn(columnName, c, jdbcType, i, "param.conditionList[%d].orList[" + j + "].value[%d]");
                 builder.append(in);
