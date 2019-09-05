@@ -10,7 +10,7 @@ public class FileUtils {
 		return read(new File(file));
 	}
 
-	public static String read(File file) {
+	private static String read(File file) {
 		if (!file.exists()) {
 			return null;
 		}

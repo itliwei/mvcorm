@@ -29,6 +29,10 @@ public class Resp<T> implements Serializable {
         return "20000".equals(this.getCode());
     }
 
+    public Resp(){
+
+    }
+
     public static Resp success(Object data) {
         return new Resp("20000", "success", data);
     }

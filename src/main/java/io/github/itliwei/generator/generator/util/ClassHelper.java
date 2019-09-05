@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class ClassHelper {
 
-    static final Logger logger = LoggerFactory.getLogger(ClassHelper.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClassHelper.class);
 
 
     public static Set<Class<?>> getClasses(String pack) {
@@ -24,7 +24,7 @@ public class ClassHelper {
         return getClasses(queryModelPackage).stream().collect(Collectors.toMap(Class::getSimpleName, k -> newIns(k.getSimpleName())));
     }
 
-    public static Class<?> newIns(String className) {
+    private static Class<?> newIns(String className) {
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
@@ -58,8 +58,7 @@ public class ClassHelper {
         for(int i=classes.size();i>0;i--){
             try {
                 Field[] declaredFields = classes.get(i-1).getDeclaredFields();
-                if (declaredFields != null)
-                    fields.addAll(Arrays.asList(declaredFields));
+                fields.addAll(Arrays.asList(declaredFields));
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }

@@ -20,34 +20,23 @@ import ${importFullType};
 public class ${meta.name} {
 <#list meta.groups as group>
     /**
-    * @return
-    * @throws InvocationTargetException
-    * @throws IllegalAccessException
+    * @return ${meta.entityName}
+    * @param ${group}
     */
     public ${meta.entityName} convert2${meta.entityName}(${group} source) {
         ${meta.entityName} target = new ${meta.entityName}();
-        try{
-            BeanUtils.copyProperties(target,source);
-            return target;
-        }catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return null;
+        BeanConvertUtil.convert(target,source);
+        return target;
     }
 
+    /**
+    * @return ${group}
+    * @param ${meta.entityName}
+    */
     public ${group} convert2${group}(${meta.entityName} source){
         ${group} target = new ${group}();
-        try{
-            BeanUtils.copyProperties(target,source);
-            return target;
-        }catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return null;
+        BeanConvertUtil.convert(target,source);
+        return target;
     }
 </#list>
 }
