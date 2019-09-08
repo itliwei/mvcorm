@@ -34,6 +34,8 @@ public class ElementMeta {
 
     private String path;
 
+    private String group;
+
 
     public void addVoFiled(Field field){
         this.voFields.add(field);

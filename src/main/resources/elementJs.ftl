@@ -4,7 +4,7 @@ export function getList(params) {
     return request({
         url: '${meta.path}/page/query',
         method: 'POST',
-        params
+        data: params
     })
 }
 
@@ -20,7 +20,7 @@ export function update(params) {
     return request({
         url: '${meta.path}/update',
         method: 'POST',
-        params
+        data: params
     })
 }
 
@@ -28,7 +28,7 @@ export function add(params) {
     return request({
         url: '${meta.path}/add',
         method: 'POST',
-        params
+        data: params
     })
 }
 

@@ -41,7 +41,10 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 	}
 
 	private String getControllerFilePath(Class<?> entityClass) {
-		return controllerPath + File.separator + entityClass.getSimpleName() + config.getControllerSuffix() + ".java";
+		ControllerClass controllerClass = entityClass.getAnnotation(ControllerClass.class);
+		String name = controllerClass.name();
+		String fileName = name.isEmpty() ? entityClass.getSimpleName()+ config.getControllerSuffix() : name;
+		return controllerPath + File.separator + fileName + ".java";
 	}
 
 	@Override

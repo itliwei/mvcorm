@@ -6,5 +6,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ElementClass {
-    String path() default "";
+    String path()  default "";
+
+    String group() default "";
 }

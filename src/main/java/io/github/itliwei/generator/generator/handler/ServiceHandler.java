@@ -37,11 +37,13 @@ public class ServiceHandler extends ScopedHandler<ServiceMeta> {
 		} else if (!path.isDirectory()) {
 			throw new IllegalArgumentException("queryModelPath is not a directory");
 		}
-
 	}
 
 	private String getServiceFilePath(Class<?> entityClass) {
-		return servicePath + File.separator + entityClass.getSimpleName() + config.getServiceSuffix() + ".java";
+		ServiceClass serviceClass = entityClass.getAnnotation(ServiceClass.class);
+		String name = serviceClass.name();
+		String fileName = name.isEmpty() ? entityClass.getSimpleName() + config.getServiceSuffix() : name;
+		return servicePath + File.separator + fileName + ".java";
 	}
 
 	@Override

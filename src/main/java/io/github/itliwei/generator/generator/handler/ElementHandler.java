@@ -7,6 +7,7 @@ import io.github.itliwei.generator.annotation.elementui.ElementClass;
 import io.github.itliwei.generator.annotation.view.View;
 import io.github.itliwei.generator.generator.meta.ElementMeta;
 import io.github.itliwei.generator.generator.util.ConfigChecker;
+import io.github.itliwei.generator.generator.util.StringUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ public class ElementHandler extends ScopedHandler<ElementMeta> {
 	@Override
 	protected void init() throws Exception {
 		super.init();
-		ConfigChecker.notBlank(config.getElementSuffix(), "config controllerSuffix is miss");
+		ConfigChecker.notBlank(config.getElementSuffix(), "config elementSuffix is miss");
 		/* 初始化文件夹 */
 		elementPackage = config.getElementPackage();
 		elementPath = config.getElementPath();
@@ -31,23 +32,38 @@ public class ElementHandler extends ScopedHandler<ElementMeta> {
 		if (!path.exists()) {
 			path.mkdirs();
 		} else if (!path.isDirectory()) {
-			throw new IllegalArgumentException("queryModelPath is not a directory");
+			throw new IllegalArgumentException("elementModelPath is not a directory");
 		}
 
 	}
 
 	private String getElementFilePath(Class<?> entityClass) {
-		String s = elementPath + File.separator + entityClass.getSimpleName() + File.separator;
+		ElementClass elementClass = entityClass.getAnnotation(ElementClass.class);
+		String path1 = elementClass.group();
+		String s ;
+		if(StringUtils.isNotBlank(path1)){
+			s = elementPath + File.separator+ path1 + File.separator + entityClass.getSimpleName() + File.separator;
+		}else{
+			s = elementPath + File.separator + entityClass.getSimpleName() + File.separator;
+		}
 		File path = new File(s);
 		if (!path.exists()){
 			path.mkdirs();
 		}
-		return elementPath + File.separator + entityClass.getSimpleName()+ File.separator
-				+ config.getElementSuffix() + ".vue";
+		return s + config.getElementSuffix() + ".vue";
 	}
 
 	private String getElementJsFilePath(Class<?> entityClass) {
-		return elementPath + File.separator + entityClass.getSimpleName() + ".js";
+		ElementClass elementClass = entityClass.getAnnotation(ElementClass.class);
+		String path1 = elementClass.group();
+		String s ;
+		if(StringUtils.isNotBlank(path1)){
+			s = elementPath + File.separator+ path1 + File.separator;
+		}else{
+			s = elementPath + File.separator ;
+		}
+
+		return s + entityClass.getSimpleName() + ".js";
 	}
 
 	@Override
@@ -70,7 +86,7 @@ public class ElementHandler extends ScopedHandler<ElementMeta> {
 			ElementMeta meta = new ElementMeta();
 			meta.setPath(path);
 			meta.setName(entityClass.getSimpleName());
-			
+			meta.setGroup(elementClass.group());
 			String typeName = null;
 			if(Character.isLowerCase(entityClass.getSimpleName().charAt(0)))
 				typeName = entityClass.getSimpleName();
@@ -79,9 +95,9 @@ public class ElementHandler extends ScopedHandler<ElementMeta> {
 			}
 			
 			meta.setName(typeName);
-			meta.setDtoName(typeName+"Dto");
-			meta.setVoName(typeName+"Vo");
-			meta.setQueryName(typeName+"QueryModel");
+			meta.setDtoName(typeName+config.getDtoSuffix());
+			meta.setVoName(typeName+config.getVoSuffix());
+			meta.setQueryName(typeName+config.getQueryModelSuffix());
 
 			Field[] declaredFields = entityClass.getDeclaredFields();
 			for (Field declaredField : declaredFields) {
@@ -101,10 +117,10 @@ public class ElementHandler extends ScopedHandler<ElementMeta> {
 
 						String[] groups = view.groups();
 						for (String group : groups) {
-							if (group.indexOf("Vo")>0){
+							if (group.indexOf(config.getVoSuffix())>0){
 								meta.addVoFiled(field);
 							}
-							if (group.indexOf("Dto")>0){
+							if (group.indexOf(config.getDtoSuffix())>0){
 								meta.addDtoFiled(field);
 							}
 						}
