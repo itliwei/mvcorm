@@ -16,6 +16,7 @@ public class ServiceMeta {
 
     private String type;
     private String name;
+    private String serviceName;
 
     private Set<String> importFullTypes = new HashSet<>();
 

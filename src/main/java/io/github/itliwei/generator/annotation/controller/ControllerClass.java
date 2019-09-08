@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface ControllerClass {
     String path() default "";
-
+    String name() default "";
     String desc() default "api文档";
 }

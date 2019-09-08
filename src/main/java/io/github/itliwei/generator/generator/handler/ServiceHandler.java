@@ -59,10 +59,11 @@ public class ServiceHandler extends ScopedHandler<ServiceMeta> {
 		if (serviceClass == null) {
 			return null;
 		} else {
+			String name = serviceClass.name();
 			ServiceMeta meta = new ServiceMeta();
 			meta.setType(entityClass.getSimpleName());
 			meta.setServiceTypePackage(config.getEntityPackage()+".*");
-			meta.setName(entityClass.getSimpleName()+ config.getServiceSuffix());
+			meta.setName(name.isEmpty()?entityClass.getSimpleName()+ config.getServiceSuffix():name);
 			meta.setServicePackage(servicePackage);
 			return meta;
 		}

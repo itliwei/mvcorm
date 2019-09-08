@@ -60,6 +60,7 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 			return null;
 		} else {
 			String path = controllerClass.path();
+			String name = controllerClass.name();
 			String desc = controllerClass.desc();
 
 			ControllerMeta meta = new ControllerMeta();
@@ -78,7 +79,8 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 			meta.setEntityClass(entityClass.getName());
 			meta.setQueryModelClass(config.getQueryModelPackage()+"."+entityClass.getSimpleName()+config.getQueryModelSuffix());
 			meta.setServiceClass(config.getServicePackage()+"."+entityClass.getSimpleName()+config.getServiceSuffix());
-			meta.setName(entityClass.getSimpleName() + config.getControllerSuffix());
+			String s = entityClass.getSimpleName() + config.getControllerSuffix();
+			meta.setName(name.isEmpty()?s:name);
 			meta.setControllerPackage(controllerPackage);
 			meta.setComponentClass(config.getComponentPackage()+"."+entityClass.getSimpleName()+config.getComponentSuffix());
 			Set<String> set = new HashSet<>();
