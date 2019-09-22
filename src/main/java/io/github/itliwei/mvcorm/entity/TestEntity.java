@@ -33,15 +33,15 @@ import static io.github.itliwei.mvcorm.entity.TestEntity.SIMPLE_VO;
 @Type(label = "用户")
 @Table(value = "tmp_user")
 @QueryModel
-@ServiceClass
-@ControllerClass(path = "api/user",desc = "用户接口")
+@ServiceClass(name = "TestService")
+@ControllerClass(path = "api/user",desc = "用户接口",name = "TestController")
 @ElementClass
 @ViewObject(groups = {SIMPLE_VO,SIMPLE_DTO})
 public class TestEntity extends IdEntity {
 
-    public static final String SIMPLE_VO = "TestEntityVo";
+    public static final String SIMPLE_VO = "TestVo";
 
-    public static final String SIMPLE_DTO = "TestEntityDto";
+    public static final String SIMPLE_DTO = "TestDto";
 
     @Field(label = "姓名")
     @Query(value = {Condition.Operator.eq, Condition.Operator.in})

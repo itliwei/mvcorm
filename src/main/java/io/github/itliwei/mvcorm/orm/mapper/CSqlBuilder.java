@@ -2,10 +2,12 @@ package io.github.itliwei.mvcorm.orm.mapper;
 
 import io.github.itliwei.mvcorm.orm.IdEntity;
 import io.github.itliwei.mvcorm.orm.d.DeleteParam;
+import io.github.itliwei.mvcorm.orm.opt.Condition;
 import io.github.itliwei.mvcorm.orm.r.SelectParam;
 import io.github.itliwei.mvcorm.orm.u.UpdateParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +35,10 @@ public class CSqlBuilder {
 
     public String update(Map<String, Object> parameter) {
         UpdateParam param = (UpdateParam) parameter.get("param");
+        if (CollectionUtils.isEmpty(param.getConditionList())){
+            logger.error("update conditions must hava value");
+            throw new RuntimeException("update conditions must hava value");
+        }
         Map<String, Class<?>> clazzMap = new HashMap<>();
         clazzMap.put("", param.getClazz());
         initEntities(clazzMap);
@@ -52,6 +58,10 @@ public class CSqlBuilder {
 
     public String delete(Map<String, Object> parameter) {
         DeleteParam param = (DeleteParam) parameter.get("param");
+        if (CollectionUtils.isEmpty(param.getConditionList())){
+            logger.error("delete conditions must hava value");
+            throw new RuntimeException("delete conditions must hava value");
+        }
         Map<String, Class<?>> clazzMap = new HashMap<>();
         clazzMap.put("", param.getClazz());
         initEntities(clazzMap);

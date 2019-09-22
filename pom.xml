@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.itliwei</groupId>
 	<artifactId>mvcorm-spring-boot-starter</artifactId>
-	<version>0.0.4-RELEASE</version>
+	<version>0.0.5-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<properties>

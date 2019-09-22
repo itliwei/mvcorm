@@ -36,11 +36,11 @@ public class ${meta.name} {
 
     @GetMapping("/info/{id}")
     @ApiOperation(value = "根据ID查找",httpMethod = "GET")
-    public Resp<${meta.type}Vo> getById(@PathVariable long id) {
+    public Resp<${meta.voName}> getById(@PathVariable long id) {
         ${meta.type} result = ${meta.typeName}Service.findById(id);
         if (result != null){
-            ${meta.type}Vo resultVo =  ${meta.typeName}Component.convert2${meta.type}Vo(result);
-            return Resp.success(resultVo);
+            ${meta.voName} ${meta.typeName}Vo =  ${meta.typeName}Component.convert2${meta.voName}(result);
+            return Resp.success(${meta.typeName}Vo);
         }
         return Resp.error(ErrorCode.DATA_NOT_EXIST,"id:"+id);
     }
@@ -48,27 +48,27 @@ public class ${meta.name} {
 
     @PostMapping("/page/query")
     @ApiOperation(value = "分页查找内容",httpMethod = "POST")
-    public Resp<Page<${meta.type}Vo>> pageQuery(@RequestBody ${meta.type}QueryModel queryModel) {
+    public Resp<Page<${meta.voName}>> pageQuery(@RequestBody ${meta.type}QueryModel queryModel) {
         Page<${meta.type}> result = ${meta.typeName}Service.findPage(queryModel);
-        Page<${meta.type}Vo> voPage = PageBuilder.copyAndConvert(result, ${meta.typeName}Component::convert2${meta.type}Vo);
+        Page<${meta.voName}> voPage = PageBuilder.copyAndConvert(result, ${meta.typeName}Component::convert2${meta.voName});
         return Resp.success(voPage);
     }
 
     @PostMapping("/save")
     @ApiOperation(value = "保存",httpMethod = "POST")
-    public Resp<${meta.type}Vo> save(@RequestBody ${meta.type}Dto ${meta.typeName}Dto) {
+    public Resp<${meta.voName}> save(@RequestBody ${meta.dtoName} ${meta.typeName}Dto) {
         ${meta.type} entity = ${meta.typeName}Component.convert2${meta.type}(${meta.typeName}Dto);
         int result = ${meta.typeName}Service.save(entity);
         if (result > 0){
-            ${meta.type}Vo entityVo = ${meta.typeName}Component.convert2${meta.type}Vo(entity);
-            return Resp.success(entityVo);
+            ${meta.voName} ${meta.typeName}Vo = ${meta.typeName}Component.convert2${meta.voName}(entity);
+            return Resp.success(${meta.typeName}Vo);
         }
         return Resp.error(ErrorCode.SERVER,"保存数据失败");
     }
 
     @PostMapping("/update")
     @ApiOperation(value = "修改",httpMethod = "POST")
-    public Resp update(@RequestBody ${meta.type}Dto ${meta.typeName}Dto) {
+    public Resp update(@RequestBody ${meta.dtoName} ${meta.typeName}Dto) {
         ${meta.type} entity = ${meta.typeName}Component.convert2${meta.type}(${meta.typeName}Dto);
         int result = ${meta.typeName}Service.update(entity);
         if (result > 0) {

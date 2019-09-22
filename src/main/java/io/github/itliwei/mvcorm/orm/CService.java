@@ -6,6 +6,7 @@ import io.github.itliwei.mvcorm.orm.r.Select;
 import io.github.itliwei.mvcorm.orm.r.SumOpt;
 import io.github.itliwei.mvcorm.orm.u.Update;
 import io.github.itliwei.mvcorm.orm.utils.BeanUtil;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -249,6 +250,18 @@ public class CService {
      */
     public <T extends IdEntity> int delete(Class<T> clazz, List<Long> ids) {
         return Corm.switchM(mapper).delete((Class<IdEntity>) clazz).where(Condition.in(IdEntity.ID_PN, ids)).exec();
+    }
+
+    /**
+     * 条件删除
+     * @param clazz
+     * @param queryModel
+     * @param <T>
+     * @return
+     */
+    public <T extends IdEntity> int delete(Class<T> clazz, QueryModel queryModel) {
+        List conditions = this.getConditions(queryModel);
+        return Corm.switchM(mapper).delete((Class<IdEntity>) clazz).where(conditions).exec();
     }
 
     /**

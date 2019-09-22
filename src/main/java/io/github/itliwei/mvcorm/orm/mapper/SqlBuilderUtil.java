@@ -397,6 +397,9 @@ public class SqlBuilderUtil {
         if (clazz.equals(Object.class)) {
             return null;
         }
+        if (propertyName.equals(IdEntity.ID_PN)){
+            return findField(clazz.getSuperclass(), propertyName);
+        }
         try {
             return clazz.getDeclaredField(propertyName);
         } catch (NoSuchFieldException e) {

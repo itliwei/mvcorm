@@ -3,6 +3,7 @@ package io.github.itliwei.generator.generator.handler;
 
 
 import io.github.itliwei.generator.annotation.controller.ControllerClass;
+import io.github.itliwei.generator.annotation.view.ViewObject;
 import io.github.itliwei.generator.generator.meta.ControllerMeta;
 import io.github.itliwei.generator.generator.util.ConfigChecker;
 import io.github.itliwei.generator.generator.util.PackageUtil;
@@ -87,9 +88,32 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 			meta.setControllerPackage(controllerPackage);
 			meta.setComponentClass(config.getComponentPackage()+"."+entityClass.getSimpleName()+config.getComponentSuffix());
 			Set<String> set = new HashSet<>();
-			set.add(config.getVoPackage()+"."+entityClass.getSimpleName()+config.getVoSuffix());
-			set.add(config.getVoPackage()+"."+entityClass.getSimpleName()+config.getDtoSuffix());
 			meta.setImportFullTypes(set);
+			//是否指定了VO和DTO
+			ViewObject viewAnnotation = entityClass.getAnnotation(ViewObject.class);
+			if (viewAnnotation != null){
+				String[] groups = viewAnnotation.groups();
+				for (String str:groups){
+					if (meta.getVoName() == null && str.endsWith(config.getVoSuffix())){
+						set.add(config.getVoPackage()+"."+str);
+						meta.setVoName(str);
+					}
+					if (meta.getDtoName() == null && str.endsWith(config.getDtoSuffix())){
+						set.add(config.getVoPackage()+"."+str);
+						meta.setDtoName(str);
+					}
+				}
+			}
+			//默认使用类名+suffix
+			if (meta.getVoName() == null) {
+				set.add(config.getVoPackage()+"."+entityClass.getSimpleName()+config.getVoSuffix());
+				meta.setVoName(entityClass.getSimpleName() + config.getVoSuffix());
+			}
+			if (meta.getDtoName() == null) {
+				set.add(config.getVoPackage()+"."+entityClass.getSimpleName()+config.getDtoSuffix());
+				meta.setVoName(entityClass.getSimpleName() + config.getDtoSuffix());
+			}
+
 			return meta;
 		}
 	}

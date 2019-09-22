@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.InvocationTargetException;
+import io.github.itliwei.generator.generator.util.BeanConvertUtil;
 
 
 <#if meta.importFullTypes??>
@@ -21,7 +22,7 @@ public class ${meta.name} {
 <#list meta.groups as group>
     /**
     * @return ${meta.entityName}
-    * @param ${group}
+    * @param source ${group}
     */
     public ${meta.entityName} convert2${meta.entityName}(${group} source) {
         ${meta.entityName} target = new ${meta.entityName}();
@@ -31,7 +32,7 @@ public class ${meta.name} {
 
     /**
     * @return ${group}
-    * @param ${meta.entityName}
+    * @param source ${meta.entityName}
     */
     public ${group} convert2${group}(${meta.entityName} source){
         ${group} target = new ${group}();

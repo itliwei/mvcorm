@@ -30,6 +30,8 @@ public class ControllerMeta {
     private String apiValue;
     private String apiDesc;
 
+    private String voName;
+    private String dtoName;
 
     private Set<String> importFullTypes = new HashSet<>();
 

@@ -26,7 +26,9 @@ public class CormProxy<T extends IdEntity> {
      * @param clazz 对应实体class
      */
     public Insert<T> insert(Class<T> clazz) {
-        logger.debug("insert into class {}.", clazz);
+        if (logger.isDebugEnabled()) {
+            logger.debug("insert into class {}.", clazz);
+        }
         return new Insert<>();
     }
 

@@ -21,6 +21,7 @@ public class GeneratorTest {
         config.setGenLogFile(Paths.get(System.getProperty("user.home"), "gen.log").toString());
         config.setUrl("jdbc:mysql://127.0.0.1:3306/cas_db?useUnicode=true");
         config.setEntityPackage("io.github.itliwei.mvcorm.entity");
+        config.setEntityName("io.github.itliwei.mvcorm.entity.TestEntity");
         config.setQueryModelPackage("io.github.itliwei.mvcorm.query");
         config.setVoPackage("io.github.itliwei.mvcorm.vo");
         config.setServicePackage("io.github.itliwei.mvcorm.service");

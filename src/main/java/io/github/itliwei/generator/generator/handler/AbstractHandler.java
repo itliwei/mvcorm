@@ -5,12 +5,14 @@ import freemarker.template.*;
 import io.github.itliwei.generator.generator.Config;
 import io.github.itliwei.generator.generator.util.ClassHelper;
 import io.github.itliwei.generator.generator.GenLog;
+import io.github.itliwei.generator.generator.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Entity;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -27,7 +29,16 @@ public abstract class AbstractHandler implements Handler {
 		Objects.requireNonNull(config, " config cat not be null");
 		this.config = config;
 		try {
-			Set<Class<?>> classes = ClassHelper.getClasses(config.getEntityPackage());
+			Set<Class<?>> classes = new LinkedHashSet<>();
+			if (StringUtils.isNotBlank(config.getEntityName())){
+				if (!config.getEntityName().startsWith(config.getEntityPackage())){
+					throw new RuntimeException("file not in package:"+config.getEntityPackage());
+				}
+				Class<?> aClass = Class.forName(config.getEntityName());
+				classes.add(aClass);
+			}else {
+				classes = ClassHelper.getClasses(config.getEntityPackage());
+			}
 			init();
 			doHandle(classes);
 		} catch (Exception e) {

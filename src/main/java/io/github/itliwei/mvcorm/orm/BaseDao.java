@@ -1,5 +1,7 @@
 package io.github.itliwei.mvcorm.orm;
 
+import io.github.itliwei.mvcorm.orm.CService;
+import io.github.itliwei.mvcorm.orm.IdEntity;
 import io.github.itliwei.mvcorm.orm.opt.Page;
 import io.github.itliwei.mvcorm.orm.opt.QueryModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import java.util.List;
  * @author : liwei
  * @date : 2019/05/13 09:19
  */
-public class BaseService<T> {
+public class BaseDao<T> {
     @Autowired
     private CService cService;
 
@@ -59,4 +61,6 @@ public class BaseService<T> {
     public <T extends IdEntity> int delete(QueryModel queryModel){
         return cService.delete((Class<T>)getTClass(),queryModel);
     }
+
+
 }

@@ -13,6 +13,8 @@ public class Config {
 
 	private String entityPackage;
 
+	private String entityName;
+
 	private boolean useEnumOrdinalTypeHandlerByDefault = true;
 	private boolean escapeColumn = false;
 
