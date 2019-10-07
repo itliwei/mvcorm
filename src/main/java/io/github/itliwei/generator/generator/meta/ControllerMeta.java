@@ -24,8 +24,9 @@ public class ControllerMeta {
     private String path;
     private String entityClass;
     private String serviceClass;
-    private String componentClass;
+    private String serviceName;
     private String queryModelClass;
+    private String queryModelName;
 
     private String apiValue;
     private String apiDesc;

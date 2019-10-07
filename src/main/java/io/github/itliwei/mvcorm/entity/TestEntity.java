@@ -22,7 +22,7 @@ import static io.github.itliwei.mvcorm.entity.TestEntity.SIMPLE_VO;
 
 /**
  * 用户表
- * Created by liwei on 18/6/14.
+ * Created by liwei on 19/6/14.
  */
 @Getter
 @Setter
@@ -32,16 +32,14 @@ import static io.github.itliwei.mvcorm.entity.TestEntity.SIMPLE_VO;
 @Entity
 @Type(label = "用户")
 @Table(value = "tmp_user")
-@QueryModel
+@QueryModel(name = "TestQueryModel")
 @ServiceClass(name = "TestService")
 @ControllerClass(path = "api/user",desc = "用户接口",name = "TestController")
 @ElementClass
 @ViewObject(groups = {SIMPLE_VO,SIMPLE_DTO})
 public class TestEntity extends IdEntity {
-
-    public static final String SIMPLE_VO = "TestVo";
-
-    public static final String SIMPLE_DTO = "TestDto";
+    protected static final String SIMPLE_VO = "TestVo";
+    protected static final String SIMPLE_DTO = "TestDto";
 
     @Field(label = "姓名")
     @Query(value = {Condition.Operator.eq, Condition.Operator.in})
@@ -62,4 +60,5 @@ public class TestEntity extends IdEntity {
     @Query({Condition.Operator.eq, Condition.Operator.in})
     @View(groups = {SIMPLE_VO})
     private String address;
+
 }

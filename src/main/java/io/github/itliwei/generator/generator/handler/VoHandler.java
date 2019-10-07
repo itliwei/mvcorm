@@ -24,26 +24,19 @@ public class VoHandler extends AbstractHandler {
 
 
 	private String voPackage;
-	private String componentPackage;
 	private boolean useLombok;
 	private String  dir;
-	private String componentDir;
 	private Predicate<String> predicate = v -> true;
 
 	@Override
 	protected void init() throws Exception {
 		super.init();
 		this.voPackage = config.getVoPackage();
-		this.componentPackage = config.getComponentPackage();
 
 		String targetDir = PackageUtil.getDir(config.getEntityPackage());
 		dir = targetDir.substring(0,targetDir.indexOf("target/classes"))
 				+"src"+File.separator+"main"+File.separator+"java"
 				+File.separator+this.voPackage.replace(".",File.separator);
-
-		componentDir = targetDir.substring(0,targetDir.indexOf("target/classes"))
-				+"src"+File.separator+"main"+File.separator+"java"
-				+File.separator+this.componentPackage.replace(".",File.separator);
 
 		ConfigChecker.notBlank(dir, "vo path is miss");
 		/* 初始化文件夹 */
@@ -57,18 +50,7 @@ public class VoHandler extends AbstractHandler {
 		if (voPackage == null || "".equals(voPackage))
 			throw new NullPointerException("voPackage  does nou be null");
 
-		if (componentPackage == null || "".equals(componentPackage))
-			throw new NullPointerException("componentPackage  does nou be null");
 		this.useLombok = config.isUseLombok();
-
-		ConfigChecker.notBlank(componentDir, "componentPath is miss");
-		/* 初始化文件夹 */
-		File componentPath = new File(componentDir);
-		if (!componentPath.exists()) {
-			componentPath.mkdirs();
-		} else if (!path.isDirectory()) {
-			throw new IllegalArgumentException("componentPath is not a directory");
-		}
 	}
 
 
@@ -77,8 +59,6 @@ public class VoHandler extends AbstractHandler {
 		if (entityClass.isAnnotationPresent(ViewObject.class)) {
 			Map<String, Meta> result = handleClass(entityClass);
 			doWrite(handleField(entityClass, result));
-			//生成component
-			doWrite(entityClass);
 		}
 	}
 
@@ -410,6 +390,14 @@ public class VoHandler extends AbstractHandler {
 			meta.voPackage = voPackage;
 			meta.useLombok = useLombok;
 			meta.idEntity = entityClass.isAssignableFrom(IdEntity.class);
+			meta.entityName = entityClass.getSimpleName();
+			meta.importJava.add(entityClass.getName());
+			String voType = null;
+			if (voName.endsWith(config.getVoSuffix())){
+				meta.vo = true;
+			}else if (voName.endsWith(config.getDtoSuffix())){
+				meta.dto = true;
+			}
 			result.put(voName, meta);
 		});
 		return result;
@@ -541,102 +529,6 @@ public class VoHandler extends AbstractHandler {
 		});
 	}
 
-	/**
-	 *
-	 * 写component
-	 * @param entityClass
-	 */
-	private void doWrite(Class<?> entityClass){
-		final ViewObject viewObject = entityClass.getDeclaredAnnotation(ViewObject.class);
-		final String[] groups = viewObject.groups();
-		ComponentMeta componentMeta = new ComponentMeta();
-		componentMeta.setVoPackage(config.getVoPackage());
-		componentMeta.setComponentPackage(config.getComponentPackage());
-		componentMeta.setName(entityClass.getSimpleName()+config.getComponentSuffix());
-		componentMeta.setEntityName(entityClass.getSimpleName());
-		String packageName = entityClass.getPackage().getName();
-		componentMeta.setPackageName(packageName);
-		componentMeta.setGroups(groups);
-
-		final HashMap<String, Object> meta = new HashMap<String, Object>() {{
-			put("meta", componentMeta);
-		}};
-		try {
-			final String componentVo = renderTemplate("component", meta);
-			File componentFile = new File(componentDir + separator + entityClass.getSimpleName()+ config.getComponentSuffix() + ".java");
-			//merge
-			if (!componentFile.exists()) {
-				componentFile.createNewFile();
-				try (FileOutputStream os = new FileOutputStream(componentFile)) {
-					os.write(componentVo.getBytes());
-				}
-			}
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-
-	}
-
-
-	public static class ComponentMeta{
-		private String componentPackage;
-		private String voPackage;
-		private String name;
-		private String entityName;
-		private String packageName;
-
-		private String[] groups;
-
-
-		public String getComponentPackage() {
-			return componentPackage;
-		}
-
-		public void setComponentPackage(String componentPackage) {
-			this.componentPackage = componentPackage;
-		}
-
-		public String getVoPackage() {
-			return voPackage;
-		}
-
-		public void setVoPackage(String voPackage) {
-			this.voPackage = voPackage;
-		}
-
-		public String[] getGroups() {
-			return groups;
-		}
-
-		public void setGroups(String[] groups) {
-			this.groups = groups;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getEntityName() {
-			return entityName;
-		}
-
-		public void setEntityName(String entityName) {
-			this.entityName = entityName;
-		}
-
-		public String getPackageName() {
-			return packageName;
-		}
-
-		public void setPackageName(String packageName) {
-			this.packageName = packageName;
-		}
-	}
-
 	public static class Meta {
 		private Set<String> importJava = new HashSet<>();
 		private Set<String> importOther = new HashSet<>();
@@ -647,6 +539,9 @@ public class VoHandler extends AbstractHandler {
 		private String voPackage;
 		private String className;
 		private boolean useLombok;
+		private String entityName;
+		private boolean vo = false;
+		private boolean dto = false;
 		private boolean idEntity;
 
 		public List<Field> getFields() {
@@ -727,6 +622,30 @@ public class VoHandler extends AbstractHandler {
 
 		public void setIdEntity(boolean idEntity) {
 			this.idEntity = idEntity;
+		}
+
+		public String getEntityName() {
+			return entityName;
+		}
+
+		public void setEntityName(String entityName) {
+			this.entityName = entityName;
+		}
+
+		public boolean isVo() {
+			return vo;
+		}
+
+		public void setVo(boolean vo) {
+			this.vo = vo;
+		}
+
+		public boolean isDto() {
+			return dto;
+		}
+
+		public void setDto(boolean dto) {
+			this.dto = dto;
 		}
 
 		public static class MapField extends Field {

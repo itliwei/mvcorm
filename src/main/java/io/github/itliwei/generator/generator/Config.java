@@ -46,9 +46,6 @@ public class Config {
 	private String controllerPackage;
 	private String controllerSuffix = "Controller";
 
-	private String componentPackage;
-	private String componentSuffix = "Component";
-
 	private String elementPackage = "/vue";
 	private String elementPath = "/vue";
 	private String elementSuffix = "index";

@@ -1,10 +1,15 @@
 package io.github.itliwei.generator.generator.meta.querymodel;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
 public class QueryModelMeta {
 
 	private boolean useLombok;
@@ -24,67 +29,14 @@ public class QueryModelMeta {
 	 */
 	private Set<String> importFullTypes = new HashSet<>();
 
-	public boolean isIdEntity() {
-		return idEntity;
-	}
-
-	public void setIdEntity(boolean idEntity) {
-		this.idEntity = idEntity;
-	}
-
-	public Set<String> getFieldNames() {
-		return fieldNames;
-	}
-
-	public void setFieldNames(Set<String> fieldNames) {
-		this.fieldNames = fieldNames;
-	}
-
-	public boolean isUseLombok() {
-		return useLombok;
-	}
-
-	public void setUseLombok(boolean useLombok) {
-		this.useLombok = useLombok;
-	}
-
-	public Set<String> getImportFullTypes() {
-		return importFullTypes;
-	}
-
-	public void setImportFullTypes(Set<String> importFullTypes) {
-		this.importFullTypes = importFullTypes;
-	}
-
-	public List<QueryModelField> getQueryModelFields() {
-		return queryModelFields;
-	}
-
-	public void setQueryModelFields(List<QueryModelField> queryModelFields) {
-		this.queryModelFields = queryModelFields;
-	}
-
-	public String getQueryModelPackage() {
-		return queryModelPackage;
-	}
-
-	public void setQueryModelPackage(String queryModelPackage) {
-		this.queryModelPackage = queryModelPackage;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public static class QueryModelField {
 
 		private String name;
 
 		private String type;
+
+		private String label;
 
 		private boolean array;
 
@@ -112,6 +64,13 @@ public class QueryModelMeta {
 			this.type = type;
 		}
 
+		public String getLabel() {
+			return label;
+		}
+
+		public void setLabel(String label) {
+			this.label = label;
+		}
 	}
 
 }

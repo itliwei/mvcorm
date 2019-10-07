@@ -69,12 +69,12 @@ public class Condition {
         /**
          * 为Null
          */
-        isNull("IS NULL","NaN"),
+        isNull("IS NULL","NU"),
 
         /**
          * 不为Null
          */
-        isNotNull("IS NOT NULL","NaN");
+        isNotNull("IS NOT NULL","NN");
 
         private String value;
 

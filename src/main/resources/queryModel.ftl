@@ -32,7 +32,7 @@ public class ${meta.type}  extends QueryModel implements Serializable {
 	</#if>
 	<#if meta.queryModelFields??>
 	<#list meta.queryModelFields as queryModelField>
-	@ApiModelProperty
+	@ApiModelProperty(value ="${queryModelField.label}")
 	private ${queryModelField.type}<#if queryModelField.array>[]</#if> ${queryModelField.name};
 	</#list>
 	</#if>

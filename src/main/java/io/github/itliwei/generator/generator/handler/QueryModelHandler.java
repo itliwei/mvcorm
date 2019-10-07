@@ -3,6 +3,7 @@ package io.github.itliwei.generator.generator.handler;
 
 import io.github.itliwei.generator.annotation.query.Query;
 import io.github.itliwei.generator.annotation.query.QueryModel;
+import io.github.itliwei.generator.annotation.service.ServiceClass;
 import io.github.itliwei.generator.generator.util.ClassHelper;
 import io.github.itliwei.generator.generator.util.PackageUtil;
 import io.github.itliwei.generator.generator.util.StringUtils;
@@ -13,6 +14,7 @@ import io.github.itliwei.mvcorm.orm.opt.Condition;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +34,9 @@ public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 		/* 初始化文件夹 */
 		queryModelPackage = config.getQueryModelPackage();
 		String dir = PackageUtil.getDir(config.getEntityPackage());
+		if (dir == null){
+			throw new IllegalArgumentException("entityPackage is null");
+		}
 		queryModelPath = dir.substring(0,dir.indexOf("target/classes"))
 				+"src"+File.separator+"main"+File.separator+"java"
 				+File.separator+queryModelPackage.replace(".",File.separator);
@@ -46,7 +51,10 @@ public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 	}
 
 	private String getQueryModelFilePath(Class<?> entityClass) {
-		return queryModelPath + File.separator + entityClass.getSimpleName() + config.getQueryModelSuffix() + ".java";
+		QueryModel queryModel = entityClass.getAnnotation(QueryModel.class);
+		String name = queryModel.name();
+		String fileName = name.isEmpty() ? entityClass.getSimpleName() + config.getQueryModelSuffix() : name;
+		return queryModelPath + File.separator + fileName + ".java";
 	}
 
 	@Override
@@ -65,7 +73,12 @@ public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 			return null;
 		} else {
 			QueryModelMeta meta = new QueryModelMeta();
-			meta.setType(entityClass.getSimpleName() + config.getQueryModelSuffix());
+			String name = queryModel.name();
+			if (StringUtils.isNotBlank(name)){
+				meta.setType(name);
+			}else {
+				meta.setType(entityClass.getSimpleName() + config.getQueryModelSuffix());
+			}
 			meta.setQueryModelPackage(queryModelPackage);
 			meta.setUseLombok(config.isUseLombok());
 			meta.setIdEntity(entityClass.isAssignableFrom(IdEntity.class));
@@ -78,6 +91,10 @@ public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 								QueryModelMeta.QueryModelField queryModelField = new QueryModelMeta.QueryModelField();
 								queryModelField.setType(v.getType().getSimpleName());
 								queryModelField.setName(v.getName() + operator.getName());
+								io.github.itliwei.generator.annotation.Field field = v.getAnnotation(io.github.itliwei.generator.annotation.Field.class);
+								if (field != null && !"".equals(field.label())) {
+									queryModelField.setLabel(field.label());
+								}
 								if (operator.getName().equals(Condition.Operator.in.getName())) {
 									queryModelField.setArray(true);
 								}

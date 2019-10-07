@@ -3,6 +3,8 @@ package io.github.itliwei.generator.generator.handler;
 
 
 import io.github.itliwei.generator.annotation.controller.ControllerClass;
+import io.github.itliwei.generator.annotation.query.QueryModel;
+import io.github.itliwei.generator.annotation.service.ServiceClass;
 import io.github.itliwei.generator.annotation.view.ViewObject;
 import io.github.itliwei.generator.generator.meta.ControllerMeta;
 import io.github.itliwei.generator.generator.util.ConfigChecker;
@@ -28,6 +30,9 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 		/* 初始化文件夹 */
 		controllerPackage = config.getControllerPackage();
 		String dir = PackageUtil.getDir(config.getEntityPackage());
+		if (dir == null){
+			throw new IllegalArgumentException("entityPackage is null");
+		}
 		controllerPath = dir.substring(0,dir.indexOf("target/classes"))
 				+"src"+File.separator+"main"+File.separator+"java"
 				+File.separator+controllerPackage.replace(".",File.separator);
@@ -76,17 +81,33 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 			if(Character.isLowerCase(entityClass.getSimpleName().charAt(0)))
 				typeName = entityClass.getSimpleName();
 			else{
-				typeName = (new StringBuilder()).append(Character.toLowerCase(entityClass.getSimpleName().charAt(0))).append(entityClass.getSimpleName().substring(1)).toString();
+				typeName = String.valueOf(Character.toLowerCase(entityClass.getSimpleName().charAt(0))) + entityClass.getSimpleName().substring(1);
 			}
 			meta.setTypeName(typeName);
 			meta.setControllerTypePackage(config.getEntityPackage()+".*");
 			meta.setEntityClass(entityClass.getName());
-			meta.setQueryModelClass(config.getQueryModelPackage()+"."+entityClass.getSimpleName()+config.getQueryModelSuffix());
-			meta.setServiceClass(config.getServicePackage()+"."+entityClass.getSimpleName()+config.getServiceSuffix());
+
+			QueryModel queryModel = entityClass.getAnnotation(QueryModel.class);
+			if (queryModel != null && !"".equals(queryModel.name())){
+				String queryModelName = queryModel.name();
+				meta.setQueryModelClass(config.getQueryModelPackage()+"."+queryModelName);
+				meta.setQueryModelName(queryModelName);
+			}else{
+				meta.setQueryModelClass(config.getQueryModelPackage()+"."+entityClass.getSimpleName()+config.getQueryModelSuffix());
+				meta.setQueryModelName(entityClass.getSimpleName()+config.getQueryModelSuffix());
+			}
+
+			ServiceClass serviceClass = entityClass.getAnnotation(ServiceClass.class);
+			if (serviceClass != null && !"".equals(serviceClass.name())){
+				meta.setServiceClass(config.getServicePackage() + "." + serviceClass.name());
+				meta.setServiceName(serviceClass.name());
+			}else {
+				meta.setServiceClass(config.getServicePackage() + "." + entityClass.getSimpleName() + config.getServiceSuffix());
+				meta.setServiceName(entityClass.getSimpleName() + config.getServiceSuffix());
+			}
 			String s = entityClass.getSimpleName() + config.getControllerSuffix();
 			meta.setName(name.isEmpty()?s:name);
 			meta.setControllerPackage(controllerPackage);
-			meta.setComponentClass(config.getComponentPackage()+"."+entityClass.getSimpleName()+config.getComponentSuffix());
 			Set<String> set = new HashSet<>();
 			meta.setImportFullTypes(set);
 			//是否指定了VO和DTO
@@ -111,7 +132,7 @@ public class ControllerHandler extends ScopedHandler<ControllerMeta> {
 			}
 			if (meta.getDtoName() == null) {
 				set.add(config.getVoPackage()+"."+entityClass.getSimpleName()+config.getDtoSuffix());
-				meta.setVoName(entityClass.getSimpleName() + config.getDtoSuffix());
+				meta.setDtoName(entityClass.getSimpleName() + config.getDtoSuffix());
 			}
 
 			return meta;
