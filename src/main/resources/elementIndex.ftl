@@ -27,6 +27,7 @@
                 <template slot-scope="scope">
                     <el-button @click="getInfo(scope.row.id)" type="text" size="mini">查看</el-button>
                     <el-button @click="updateDialog(scope.row)" type="text" size="mini">修改</el-button>
+                    <el-button @click="delete(scope.row.id)" type="text" size="mini">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -137,6 +138,33 @@
 
             getInfo(id){
                 this.$router.push({path: '/${meta.name}/info',query: {id: id}})
+
+            },
+
+            delete(id){
+                MessageBox.confirm(
+                    '您确定要删除吗',
+                    '确定',
+                    {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }
+                ).then(() => {
+                    this.del().then((res) => {
+                        if (res.code === '20000') {
+                            Message({
+                                message: "删除成功",
+                                type: 'success',
+                            });
+                        }else{
+                            Message({
+                                message: "删除失败："+res.message,
+                                type: 'error',
+                            });
+                        }
+                    })
+                })
 
             },
 

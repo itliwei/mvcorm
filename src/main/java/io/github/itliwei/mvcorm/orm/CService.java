@@ -1,5 +1,6 @@
 package io.github.itliwei.mvcorm.orm;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import io.github.itliwei.mvcorm.orm.mapper.CMapper;
 import io.github.itliwei.mvcorm.orm.opt.*;
 import io.github.itliwei.mvcorm.orm.r.Select;
@@ -100,7 +101,15 @@ public class CService {
 
     public <T extends IdEntity> T find(Class<T> clazz,QueryModel queryModel) {
         List<Condition> conditions = this.getConditions(queryModel);
-        return (T) Corm.switchM(mapper).select((Class<IdEntity>) clazz).where(conditions).one();
+        List<OrderBy> orderBys = queryModel.getOrderBys();
+        Select select = Corm.switchM(mapper).select((Class<IdEntity>) clazz);
+        if (!CollectionUtils.isEmpty(conditions)){
+            select.where(conditions);
+        }
+        if (!CollectionUtils.isEmpty(orderBys)){
+            select.orderBy(orderBys);
+        }
+        return (T) select.one();
     }
 
     /**
@@ -139,6 +148,10 @@ public class CService {
         List<Condition> conditions = this.getConditions(queryModel);
         for (Condition condition : conditions) {
             select.where(condition);
+        }
+        List<OrderBy> orderBys = queryModel.getOrderBys();
+        if (!CollectionUtils.isEmpty(orderBys)){
+            select.orderBy(orderBys);
         }
         return select.list();
     }
@@ -230,7 +243,6 @@ public class CService {
         if (orderBys != null) {
             select.orderBy(orderBys);
         }
-
         return select.pageable(queryModel.getPageNumber(), queryModel.getPageSize()).page();
     }
 
