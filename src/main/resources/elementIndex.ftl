@@ -175,6 +175,7 @@
 
             updateDialog(val){
                 this.updateVisible = true;
+                this.${meta.dtoName}Update = val;
             },
 
             handlerSubmit(formName){
