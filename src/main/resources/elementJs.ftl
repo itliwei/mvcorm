@@ -34,7 +34,7 @@ export function add(params) {
 
 export function del(id) {
     return request({
-        url: '${meta.path}/info/'+id,
+        url: '${meta.path}/delete/'+id,
         method: 'GET',
     })
 }
