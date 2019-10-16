@@ -4,7 +4,25 @@
             <el-form :inline="true" :model="${meta.queryName}"  size="mini">
             <#list meta.queryFields as field>
                 <el-form-item :span="6" label="${field.label}">
+                <#if field.name?contains("isDel")>
+                    <el-select v-model="${meta.queryName}.${field.name}" multiple placeholder="请选择">
+                        <el-option
+                                v-for="item in this.GLOBAL.isDel"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                <#elseif field.name?contains("Time") || field.name?contains("time")
+                || field.name?contains("Date") || field.name?contains("date")>
+                    <el-date-picker
+                            v-model="${meta.queryName}.${field.name}"
+                            type="datetime"
+                            placeholder="选择日期时间">
+                    </el-date-picker>
+                <#else>
                     <el-input v-model="${meta.queryName}.${field.name}" placeholder=""></el-input>
+                </#if>
                 </el-form-item>
             </#list>
             <el-form-item :span="6" >
@@ -40,8 +58,26 @@
         <el-dialog title="添加" :visible.sync="addVisible" >
             <el-form :model="${meta.dtoName}Add" label-width="80px" ref="addForm" :rules="addFormRules" size="mini">
                 <#list meta.dtoFields as field>
-                    <el-form-item label="${field.label}" prop="${field.label}">
-                        <el-input v-model="${meta.dtoName}Add.${field.name}" ></el-input>
+                    <el-form-item label="${field.label}" prop="${field.name}">
+                        <#if field.name?contains("isDel")>
+                            <el-select v-model="${meta.queryName}.${field.name}" multiple placeholder="请选择">
+                                <el-option
+                                        v-for="item in this.GLOBAL.isDel"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                        <#elseif field.name?contains("Time") || field.name?contains("time")
+                            || field.name?contains("Date") || field.name?contains("date")>
+                            <el-date-picker
+                                    v-model="${meta.queryName}.${field.name}"
+                                    type="datetime"
+                                    placeholder="选择日期时间">
+                            </el-date-picker>
+                        <#else>
+                            <el-input v-model="${meta.queryName}.${field.name}" placeholder=""></el-input>
+                        </#if>
                     </el-form-item>
                 </#list>
             </el-form>
@@ -54,8 +90,26 @@
         <el-dialog title="修改" :visible.sync="updateVisible" >
             <el-form :model="${meta.dtoName}Update" label-width="80px" ref="form" :rules="updateFormRules">
                 <#list meta.dtoFields as field>
-                    <el-form-item label="${field.label}" prop="${field.label}">
-                        <el-input v-model="${meta.dtoName}Update.${field.name}" ></el-input>
+                    <el-form-item label="${field.label}" prop="${field.name}">
+                        <#if field.name?contains("isDel")>
+                            <el-select v-model="${meta.queryName}.${field.name}" multiple placeholder="请选择">
+                                <el-option
+                                        v-for="item in this.GLOBAL.isDel"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                        <#elseif field.name?contains("Time") || field.name?contains("time")
+                        || field.name?contains("Date") || field.name?contains("date")>
+                            <el-date-picker
+                                    v-model="${meta.queryName}.${field.name}"
+                                    type="datetime"
+                                    placeholder="选择日期时间">
+                            </el-date-picker>
+                        <#else>
+                            <el-input v-model="${meta.queryName}.${field.name}" placeholder=""></el-input>
+                        </#if>
                     </el-form-item>
                 </#list>
             </el-form>
