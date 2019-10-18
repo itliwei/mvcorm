@@ -62,8 +62,14 @@ public class ElementHandler extends ScopedHandler<ElementMeta> {
 		}else{
 			s = elementPath + File.separator ;
 		}
+		String name ;
+		if(Character.isLowerCase(entityClass.getSimpleName().charAt(0)))
+			name = entityClass.getSimpleName();
+		else{
+			name = (new StringBuilder()).append(Character.toLowerCase(entityClass.getSimpleName().charAt(0))).append(entityClass.getSimpleName().substring(1)).toString();
+		}
 
-		return s + entityClass.getSimpleName() + ".js";
+		return s + name + ".js";
 	}
 
 	@Override
@@ -85,7 +91,6 @@ public class ElementHandler extends ScopedHandler<ElementMeta> {
 
 			ElementMeta meta = new ElementMeta();
 			meta.setPath(path);
-			meta.setName(entityClass.getSimpleName());
 			meta.setGroup(elementClass.group());
 			String typeName = null;
 			if(Character.isLowerCase(entityClass.getSimpleName().charAt(0)))
@@ -129,6 +134,7 @@ public class ElementHandler extends ScopedHandler<ElementMeta> {
 				}
 				Query[] queries = declaredField.getAnnotationsByType(Query.class);
 				if (queries.length > 0){
+					field.setQueryName(declaredField.getName()+queries[0].value()[0].getName());
 					meta.addQueryField(field);
 				}
 			}

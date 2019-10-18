@@ -35,11 +35,11 @@ public class GeneratorTest {
         config.setElementPath("/Users/vince/myproject/mvcorm/vue");
 
         Generator.generate(config
-                , new VoHandler()
-                , new QueryModelHandler()
-                , new ServiceHandler()
-                , new ControllerHandler()
-//                , new ElementHandler()
+//                , new VoHandler()
+//                , new QueryModelHandler()
+//                , new ServiceHandler()
+//                , new ControllerHandler()
+                , new ElementHandler()
 //               , new MysqlHandler(true)
         );
 

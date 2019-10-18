@@ -53,6 +53,7 @@ public class ElementMeta {
         protected String name;
         protected String type;
         protected String label;
+        protected String queryName;
 
         public String getName() {
             return name;
@@ -76,6 +77,14 @@ public class ElementMeta {
 
         public void setLabel(String label) {
             this.label = label;
+        }
+
+        public String getQueryName() {
+            return queryName;
+        }
+
+        public void setQueryName(String queryName) {
+            this.queryName = queryName;
         }
     }
 }
