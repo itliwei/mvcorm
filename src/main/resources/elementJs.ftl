@@ -26,7 +26,7 @@ export function update(params) {
 
 export function add(params) {
     return request({
-        url: '${meta.path}/add',
+        url: '${meta.path}/save',
         method: 'POST',
         data: params
     })

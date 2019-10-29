@@ -5,7 +5,7 @@
             <#list meta.queryFields as field>
                 <el-form-item :span="6" label="${field.label}">
                 <#if field.name?contains("isDel")>
-                    <el-select v-model="${meta.queryName}.${field.queryName}" multiple placeholder="请选择">
+                    <el-select v-model="${meta.queryName}.${field.queryName}" placeholder="请选择">
                         <el-option
                                 v-for="item in this.GLOBAL.isDel"
                                 :key="item.value"
@@ -60,7 +60,7 @@
                 <#list meta.dtoFields as field>
                     <el-form-item label="${field.label}" prop="${field.name}">
                         <#if field.name?contains("isDel")>
-                            <el-select v-model="${meta.queryName}.${field.name}" multiple placeholder="请选择">
+                            <el-select v-model="${meta.dtoName}Add.${field.name}" placeholder="请选择">
                                 <el-option
                                         v-for="item in this.GLOBAL.isDel"
                                         :key="item.value"
@@ -71,12 +71,12 @@
                         <#elseif field.name?contains("Time") || field.name?contains("time")
                             || field.name?contains("Date") || field.name?contains("date")>
                             <el-date-picker
-                                    v-model="${meta.queryName}.${field.name}"
+                                    v-model="${meta.dtoName}Add.${field.name}"
                                     type="datetime"
                                     placeholder="选择日期时间">
                             </el-date-picker>
                         <#else>
-                            <el-input v-model="${meta.queryName}.${field.name}" placeholder=""></el-input>
+                            <el-input v-model="${meta.dtoName}Add.${field.name}" placeholder=""></el-input>
                         </#if>
                     </el-form-item>
                 </#list>
@@ -88,11 +88,11 @@
         </el-dialog>
 
         <el-dialog title="修改" :visible.sync="updateVisible" >
-            <el-form :model="${meta.dtoName}Update" label-width="80px" ref="form" :rules="updateFormRules">
+            <el-form :model="${meta.dtoName}Update" label-width="80px" ref="updateForm" :rules="updateFormRules">
                 <#list meta.dtoFields as field>
                     <el-form-item label="${field.label}" prop="${field.name}">
                         <#if field.name?contains("isDel")>
-                            <el-select v-model="${meta.queryName}.${field.name}" multiple placeholder="请选择">
+                            <el-select v-model="${meta.dtoName}Update.${field.name}" placeholder="请选择">
                                 <el-option
                                         v-for="item in this.GLOBAL.isDel"
                                         :key="item.value"
@@ -103,12 +103,12 @@
                         <#elseif field.name?contains("Time") || field.name?contains("time")
                         || field.name?contains("Date") || field.name?contains("date")>
                             <el-date-picker
-                                    v-model="${meta.queryName}.${field.name}"
+                                    v-model="${meta.dtoName}Update.${field.name}"
                                     type="datetime"
                                     placeholder="选择日期时间">
                             </el-date-picker>
                         <#else>
-                            <el-input v-model="${meta.queryName}.${field.name}" placeholder=""></el-input>
+                            <el-input v-model="${meta.dtoName}Update.${field.name}" placeholder=""></el-input>
                         </#if>
                     </el-form-item>
                 </#list>
@@ -205,7 +205,7 @@
                         type: 'warning'
                     }
                 ).then(() => {
-                    this.del().then((res) => {
+                    this.del(id).then((res) => {
                         if (res.code === '20000') {
                             Message({
                                 message: "删除成功",
@@ -242,6 +242,7 @@
                                     type: 'success',
                                 });
                             });
+                            this.updateVisible = false;
                             this.init();
                         }else if (formName === "addForm"){
                             add(this.${meta.dtoName}Add).then(response => {
@@ -250,6 +251,7 @@
                                     type: 'success',
                                 });
                             });
+                            this.addVisible = false;
                             this.init();
                         }
 
