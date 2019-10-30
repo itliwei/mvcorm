@@ -5,7 +5,7 @@
             <#list meta.queryFields as field>
                 <el-form-item :span="6" label="${field.label}">
                 <#if field.name?contains("isDel")>
-                    <el-select v-model="${meta.queryName}.${field.queryName}" placeholder="请选择">
+                    <el-select v-model="${meta.queryName}.${field.queryName}"EQ placeholder="请选择">
                         <el-option
                                 v-for="item in this.GLOBAL.isDel"
                                 :key="item.value"
@@ -16,12 +16,12 @@
                 <#elseif field.name?contains("Time") || field.name?contains("time")
                 || field.name?contains("Date") || field.name?contains("date")>
                     <el-date-picker
-                            v-model="${meta.queryName}.${field.queryName}"
+                            v-model="${meta.queryName}.${field.queryName}EQ"
                             type="datetime"
                             placeholder="选择日期时间">
                     </el-date-picker>
                 <#else>
-                    <el-input v-model="${meta.queryName}.${field.queryName}" placeholder=""></el-input>
+                    <el-input v-model="${meta.queryName}.${field.queryName}EQ" placeholder=""></el-input>
                 </#if>
                 </el-form-item>
             </#list>
@@ -139,7 +139,7 @@
                 listLoading: false,
                 ${meta.queryName}:{
                     <#list meta.queryFields as field>
-                    ${field.queryName}:null,
+                    ${field.queryName}EQ:null,
                     </#list>
                     pageNumber: 1,
                     pageSize: 10,
