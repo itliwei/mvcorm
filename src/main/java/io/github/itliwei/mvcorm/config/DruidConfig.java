@@ -15,15 +15,9 @@ import javax.sql.DataSource;
 @Configuration
 public class DruidConfig {
 
-    @ConfigurationProperties(prefix="spring.datasource.master")
+    @ConfigurationProperties(prefix="spring.datasource")
     @Bean(name="dataSource")
     public DataSource druidMasterDataSource() {
-        return   new DruidDataSource();
-    }
-
-    @ConfigurationProperties(prefix="spring.datasource.slave")
-    @Bean(name="slaveDataSource")
-    public DataSource slaveDataSource() {
         return   new DruidDataSource();
     }
 }

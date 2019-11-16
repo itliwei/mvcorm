@@ -26,7 +26,7 @@ import ${importFullType};
 @Slf4j
 @RestController
 @RequestMapping("${meta.path}")
-@Api(value = "${meta.apiValue}",description = "${meta.apiDesc}")
+@Api(tags = "${meta.apiValue}",description = "${meta.apiDesc}")
 public class ${meta.name} {
 
     @Autowired

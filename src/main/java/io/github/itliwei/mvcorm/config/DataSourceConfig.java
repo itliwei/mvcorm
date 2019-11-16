@@ -36,9 +36,6 @@ public class DataSourceConfig {
     @Resource
     private DruidDataSource dataSource;
 
-    @Resource
-    private DataSource slaveDataSource;
-
 
 
     private Interceptor[] interceptors() {
@@ -69,7 +66,7 @@ public class DataSourceConfig {
     public CormConfig initConfig() throws Exception {
         CormConfig cormConfig = new CormConfig();
         cormConfig.addDefaultMasterMapper(mapper(dataSource));
-        cormConfig.addDefaultSlaveMapper(mapper(slaveDataSource));
+        cormConfig.addDefaultSlaveMapper(mapper(dataSource));
         return cormConfig;
     }
 
