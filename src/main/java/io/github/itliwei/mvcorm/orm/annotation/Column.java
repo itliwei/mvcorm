@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * 字段
- * Created by cheshun on 2016/5/16.
+ * Created by liwei on 2016/5/16.
  */
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

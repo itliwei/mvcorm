@@ -5,7 +5,7 @@ import io.github.itliwei.mvcorm.orm.r.SelectParam;
 
 /**
  * CountResult
- * Created by cheshun on 17/8/23.
+ * Created by liwei on 17/8/23.
  */
 public interface CountResult {
 

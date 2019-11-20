@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * 单表查询
- * Created by cheshun on 17/8/9.
+ * Created by liwei on 17/8/9.
  */
 public class Select<T> implements OneResult<T>, ListResult<T> {
 

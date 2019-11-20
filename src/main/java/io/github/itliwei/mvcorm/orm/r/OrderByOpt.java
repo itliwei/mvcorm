@@ -6,7 +6,7 @@ import io.github.itliwei.mvcorm.orm.result.ListResult;
 import io.github.itliwei.mvcorm.orm.result.OneResult;
 
 /**
- * Created by cheshun on 17/8/15.
+ * Created by liwei on 17/8/15.
  */
 public class OrderByOpt<T> implements OneResult<T>, ListResult<T> {
 

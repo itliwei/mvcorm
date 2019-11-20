@@ -7,7 +7,7 @@ import io.github.itliwei.mvcorm.orm.opt.Field;
 import java.util.Collection;
 
 /**
- * Created by cheshun on 17/8/11.
+ * Created by liwei on 17/8/11.
  */
 public class SelectMulti {
 

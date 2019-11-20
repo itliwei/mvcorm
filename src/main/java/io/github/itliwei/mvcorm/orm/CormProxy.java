@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * Created by cheshun on 17/9/28.
+ * Created by liwei on 17/9/28.
  */
 public class CormProxy<T extends IdEntity> {
 

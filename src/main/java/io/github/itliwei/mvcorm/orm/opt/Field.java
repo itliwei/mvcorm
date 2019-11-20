@@ -2,7 +2,7 @@ package io.github.itliwei.mvcorm.orm.opt;
 
 /**
  * 字段
- * Created by cheshun on 17/8/27.
+ * Created by liwei on 17/8/27.
  */
 public class Field {
 

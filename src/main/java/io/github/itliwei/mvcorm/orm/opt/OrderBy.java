@@ -2,7 +2,7 @@ package io.github.itliwei.mvcorm.orm.opt;
 
 /**
  * 排序
- * Created by cheshun on 2016/5/16.
+ * Created by liwei on 2016/5/16.
  */
 public class OrderBy {
 

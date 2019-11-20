@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Corm 使用API
- * Created by cheshun on 17/8/9.
+ * Created by liwei on 17/8/9.
  */
 public class Corm {
     private static final Logger logger = LoggerFactory.getLogger(Corm.class);

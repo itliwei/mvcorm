@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by cheshun on 17/9/26.
+ * Created by liwei on 17/9/26.
  */
 public class DeleteParam {
 

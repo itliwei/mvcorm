@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * Created by cheshun on 17/8/9.
+ * Created by liwei on 17/8/9.
  */
 public class AppointUpdate<T> implements UpdateExec {
     private static final Logger logger = LoggerFactory.getLogger(AppointUpdate.class);

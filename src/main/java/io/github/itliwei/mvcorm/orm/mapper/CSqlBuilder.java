@@ -16,7 +16,7 @@ import java.util.Map;
 import static io.github.itliwei.mvcorm.orm.mapper.SqlBuilderUtil.*;
 
 /**
- * Created by cheshun on 17/8/23.
+ * Created by liwei on 17/8/23.
  */
 public class CSqlBuilder {
 

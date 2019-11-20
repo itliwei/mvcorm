@@ -22,7 +22,7 @@ import java.util.Properties;
 
 /**
  * Mybatis 分页拦截器
- * Created by cheshun on 2016/4/14.
+ * Created by liwei on 2016/4/14.
  */
 @Intercepts({@Signature(type =StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
 public class SkipInterceptor implements Interceptor {

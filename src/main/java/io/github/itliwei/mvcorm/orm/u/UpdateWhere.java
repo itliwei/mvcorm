@@ -4,7 +4,7 @@ import io.github.itliwei.mvcorm.orm.CormContext;
 import io.github.itliwei.mvcorm.orm.opt.Condition;
 
 /**
- * Created by cheshun on 17/8/9.
+ * Created by liwei on 17/8/9.
  */
 public class UpdateWhere implements UpdateExec {
 

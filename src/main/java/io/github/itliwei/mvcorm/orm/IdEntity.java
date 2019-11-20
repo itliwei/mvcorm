@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * Entity -ID
- * Created by cheshun on 2016/5/16.
+ * Created by liwei on 2016/5/16.
  */
 public abstract class IdEntity {
 

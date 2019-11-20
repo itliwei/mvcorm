@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * SumResult
- * Created by cheshun on 17/8/23.
+ * Created by liwei on 17/8/23.
  */
 public interface SumResult {
 

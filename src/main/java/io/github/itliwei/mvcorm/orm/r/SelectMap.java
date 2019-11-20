@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * 查询Map结果
- * Created by cheshun on 17/8/11.
+ * Created by liwei on 17/8/11.
  */
 public class SelectMap implements OneResult<Map<String, Object>>, ListResult<Map<String, Object>> {
 

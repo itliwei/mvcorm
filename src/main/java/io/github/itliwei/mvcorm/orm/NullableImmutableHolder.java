@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * NullableImmutableHolder
- * Created by cheshun on 16/12/18.
+ * Created by liwei on 16/12/18.
  */
 public final class NullableImmutableHolder<V> {
 

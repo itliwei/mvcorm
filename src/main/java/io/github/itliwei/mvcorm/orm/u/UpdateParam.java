@@ -7,7 +7,7 @@ import io.github.itliwei.mvcorm.orm.opt.Field;
 import java.util.*;
 
 /**
- * Created by cheshun on 17/9/25.
+ * Created by liwei on 17/9/25.
  */
 public class UpdateParam {
 

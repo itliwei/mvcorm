@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  * 查询语句构造参数
- * Created by cheshun on 17/8/22.
+ * Created by liwei on 17/8/22.
  */
 public class SelectParam {
 

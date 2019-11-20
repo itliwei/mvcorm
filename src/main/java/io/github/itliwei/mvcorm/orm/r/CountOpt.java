@@ -5,7 +5,7 @@ import io.github.itliwei.mvcorm.orm.opt.Condition;
 import io.github.itliwei.mvcorm.orm.result.CountResult;
 
 /**
- * Created by cheshun on 17/9/18.
+ * Created by liwei on 17/9/18.
  */
 public class CountOpt implements CountResult {
 

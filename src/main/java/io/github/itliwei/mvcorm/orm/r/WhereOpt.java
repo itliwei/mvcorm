@@ -7,7 +7,7 @@ import io.github.itliwei.mvcorm.orm.result.ListResult;
 import io.github.itliwei.mvcorm.orm.result.OneResult;
 
 /**
- * Created by cheshun on 17/8/23.
+ * Created by liwei on 17/8/23.
  */
 public class WhereOpt<T> implements OneResult<T>, ListResult<T> {
 

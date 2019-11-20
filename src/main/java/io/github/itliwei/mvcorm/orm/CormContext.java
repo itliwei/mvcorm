@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  * Corm 上下文环境
- * Created by cheshun on 17/9/8.
+ * Created by liwei on 17/9/8.
  */
 public class CormContext {
     /**

@@ -4,7 +4,7 @@ import io.github.itliwei.mvcorm.orm.CormContext;
 
 /**
  * 提交操作
- * Created by cheshun on 17/8/11.
+ * Created by liwei on 17/8/11.
  */
 public interface UpdateExec {
 

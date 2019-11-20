@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * 条件
- * Created by cheshun on 2016/5/15.
+ * Created by liwei on 2016/5/15.
  */
 public class Condition {
 

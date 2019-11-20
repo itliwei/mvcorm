@@ -2,7 +2,7 @@ package io.github.itliwei.mvcorm.orm.opt;
 
 /**
  * Skip
- * Created by cheshun on 2016/5/20.
+ * Created by liwei on 2016/5/20.
  */
 public class Skipped {
 

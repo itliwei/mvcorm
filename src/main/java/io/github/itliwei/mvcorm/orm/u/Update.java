@@ -8,7 +8,7 @@ import io.github.itliwei.mvcorm.orm.opt.Field;
 
 
 /**
- * Created by cheshun on 17/8/9.
+ * Created by liwei on 17/8/9.
  */
 public class Update<T extends IdEntity> {
 

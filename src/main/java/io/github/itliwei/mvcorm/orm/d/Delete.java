@@ -8,7 +8,7 @@ import java.util.Collection;
 
 /**
  * Delete
- * Created by cheshun on 17/8/9.
+ * Created by liwei on 17/8/9.
  */
 public class Delete implements DeleteExec {
 

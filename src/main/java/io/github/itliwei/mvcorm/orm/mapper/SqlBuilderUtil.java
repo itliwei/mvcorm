@@ -18,7 +18,7 @@ import java.util.*;
 
 /**
  * SqlBuilderUtil
- * Created by cheshun on 17/8/25.
+ * Created by liwei on 17/8/25.
  */
 public class SqlBuilderUtil {
     private static final Logger logger = LoggerFactory.getLogger(SqlBuilderUtil.class);
@@ -213,8 +213,17 @@ public class SqlBuilderUtil {
             String columnName = findColumnName(clazz, getter, condition.getProperty());
             String jdbcType = findJdbcType(clazz, getter, condition.getProperty());
             if (condition.getOperator() == Condition.Operator.in && condition.getValue() != null) {
-                String in = whereIn(columnName, condition, jdbcType, i, "param.conditionList[%d].value[%d]");
-                sql.WHERE(in);
+                if (condition.getValue() instanceof Collections) {
+                    Collection<?> collections = (Collection<?>) condition.getValue();
+                    if (collections.size() > 0){
+                        String in = whereIn(columnName, condition, jdbcType, i, "param.conditionList[%d].value[%d]");
+                        sql.WHERE(in);
+                    }
+                }else if  (condition.getValue().getClass().isArray()) {
+                    String in = whereIn(columnName, condition, jdbcType, i, "param.conditionList[%d].value[%d]");
+                    sql.WHERE(in);
+                }
+
             }
             else if (condition.getOperator() == Condition.Operator.isNull
                     || condition.getOperator() == Condition.Operator.isNotNull) {
@@ -284,15 +293,30 @@ public class SqlBuilderUtil {
         } else {
             builder.append(String.format("%s %s (", columnName, Condition.Operator.in.getValue()));
         }
-        Collection<?> collections = (Collection<?>) condition.getValue();
-        for (int j = 0; j < collections.size(); j++) {
-            builder.append("#{").append(String.format(format, i, j));
-            if (!jdbcType.equals("")) {
-                builder.append(String.format(",jdbcType=%s", jdbcType));
+        Object value = condition.getValue();
+        if (value instanceof Collections) {
+            Collection<?> collections = (Collection<?>) condition.getValue();
+            for (int j = 0; j < collections.size(); j++) {
+                builder.append("#{").append(String.format(format, i, j));
+                if (!jdbcType.equals("")) {
+                    builder.append(String.format(",jdbcType=%s", jdbcType));
+                }
+                builder.append("}");
+                if (j < collections.size() - 1) {
+                    builder.append(", ");
+                }
             }
-            builder.append("}");
-            if (j < collections.size() - 1) {
-                builder.append(", ");
+        }else if (value.getClass().isArray()){
+            Object[] objects =  (Object[]) condition.getValue();
+            for (int j = 0; j < objects.length; j++) {
+                builder.append("#{").append(String.format(format, i, j));
+                if (!jdbcType.equals("")) {
+                    builder.append(String.format(",jdbcType=%s", jdbcType));
+                }
+                builder.append("}");
+                if (j < objects.length - 1) {
+                    builder.append(", ");
+                }
             }
         }
         builder.append(") ");

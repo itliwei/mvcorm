@@ -9,7 +9,7 @@
         <setting name="aggressiveLazyLoading" value="false"/>
         <setting name="mapUnderscoreToCamelCase" value="false"/>
         <setting name="defaultStatementTimeout" value="25"/>
-        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
     </settings>
 
     <mappers>

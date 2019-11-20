@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Corm 配置
  * 主要配置CMapper对象
- * Created by cheshun on 17/9/3.
+ * Created by liwei on 17/9/3.
  */
 public class CormConfig {
 

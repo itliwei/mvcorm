@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * 分页
- * Created by cheshun on 2016/5/23.
+ * Created by liwei on 2016/5/23.
  */
 public class Page<T> implements Serializable {
     private static final long serialVersionUID = -8719253484057263862L;
