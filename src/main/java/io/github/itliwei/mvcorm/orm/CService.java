@@ -374,7 +374,7 @@ public class CService {
         return filedNames.stream()
                 .filter(filedName->{
                     Object fieldValue = BeanUtil.getFieldValueByName(filedName, queryModel);
-                    return fieldValue != null;
+                    return fieldValue != null && !"".equals(fieldValue);
                 })
                 .map(filedName->{
                     Object fieldValue = BeanUtil.getFieldValueByName(filedName, queryModel);
