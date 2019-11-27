@@ -213,7 +213,7 @@ public class SqlBuilderUtil {
             String columnName = findColumnName(clazz, getter, condition.getProperty());
             String jdbcType = findJdbcType(clazz, getter, condition.getProperty());
             if (condition.getOperator() == Condition.Operator.in && condition.getValue() != null) {
-                if (condition.getValue() instanceof Collections) {
+                if (condition.getValue() instanceof Collection) {
                     Collection<?> collections = (Collection<?>) condition.getValue();
                     if (collections.size() > 0){
                         String in = whereIn(columnName, condition, jdbcType, i, "param.conditionList[%d].value[%d]");
@@ -294,7 +294,7 @@ public class SqlBuilderUtil {
             builder.append(String.format("%s %s (", columnName, Condition.Operator.in.getValue()));
         }
         Object value = condition.getValue();
-        if (value instanceof Collections) {
+        if (value instanceof Collection) {
             Collection<?> collections = (Collection<?>) condition.getValue();
             for (int j = 0; j < collections.size(); j++) {
                 builder.append("#{").append(String.format(format, i, j));
