@@ -32,7 +32,7 @@ public interface PageResult<T> {
                 ts = Utils.entityList((Class<T>) type, result);
             }
         }
-        long count = CormContext.getCMapper().selectCount(param);
+        long count = CormContext.LOCAL_MAPPER.get().selectCount(param);
         return new Page<T>(ts, count, skipped.getSkip() / skipped.getCount() + 1, skipped.getCount());
     }
 }

@@ -31,7 +31,12 @@ public class CService {
      * @return int
      */
     public <T extends IdEntity> int save(T entity) {
-        return Corm.switchM(mapper).insert((Class<IdEntity>) entity.getClass()).incId().obj(entity);
+        if (entity.getId() != null && entity.getId() != 0L) {
+            return Corm.switchM(mapper).insert((Class<IdEntity>) entity.getClass()).obj(entity);
+        }else {
+            //自增
+            return Corm.switchM(mapper).insert((Class<IdEntity>) entity.getClass()).incId().obj(entity);
+        }
     }
 
     /**
