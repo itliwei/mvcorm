@@ -15,7 +15,7 @@ public abstract class QueryModel{
 
     private int pageSize = 10;
 
-    private List<OrderBy> orderBys = Lists.newArrayList();
+    private List<OrderBy> orderBys;
 
     public int getPageNumber() {
         return pageNumber;
