@@ -220,8 +220,11 @@ public class SqlBuilderUtil {
                         sql.WHERE(in);
                     }
                 }else if  (condition.getValue().getClass().isArray()) {
-                    String in = whereIn(columnName, condition, jdbcType, i, "param.conditionList[%d].value[%d]");
-                    sql.WHERE(in);
+                    Object[] objects =  (Object[]) condition.getValue();
+                    if (objects.length > 0) {
+                        String in = whereIn(columnName, condition, jdbcType, i, "param.conditionList[%d].value[%d]");
+                        sql.WHERE(in);
+                    }
                 }
 
             }

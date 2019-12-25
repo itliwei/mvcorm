@@ -52,11 +52,11 @@ public class Resp<T> implements Serializable {
     }
 
     public static Resp error(ErrorCode errorCode, String... message) {
-        return new Resp(errorCode.getCode(), String.format(errorCode.getMessage(), message), "error");
+        return new Resp(errorCode.getCode(), String.format(errorCode.getMessage(), message), null);
     }
 
     public static Resp error(String code, String message) {
-        return new Resp(code, message, "error");
+        return new Resp(code, message, null);
     }
 
     public static Resp error(ErrorCode errorCode, Map<String, Object> data) {
@@ -64,7 +64,7 @@ public class Resp<T> implements Serializable {
     }
 
     public static Resp error(ErrorCode code) {
-        return new Resp(code.getCode(), code.getMessage(), "error");
+        return new Resp(code.getCode(), code.getMessage(), null);
     }
 
 
