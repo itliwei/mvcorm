@@ -303,6 +303,22 @@ public class CService {
     }
 
     /**
+     * 总数
+     * @param clazz
+     * @param queryModel
+     * @param <T>
+     * @return
+     */
+    public <T extends IdEntity> long count(Class<T> clazz, QueryModel queryModel) {
+        List conditions = this.getConditions(queryModel);
+        Select select = Corm.switchM(mapper).select((Class<IdEntity>) clazz);
+        if (conditions != null) {
+            select.where(conditions);
+        }
+        return select.count().number();
+    }
+
+    /**
      * 查询实体数量
      * @param conditions 条件 {@link Condition}
      * @return count

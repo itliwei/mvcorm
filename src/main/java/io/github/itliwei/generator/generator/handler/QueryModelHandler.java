@@ -89,7 +89,11 @@ public class QueryModelHandler extends ScopedHandler<QueryModelMeta> {
 						if (query != null) {
 							for (Condition.Operator operator : query.value()) {
 								QueryModelMeta.QueryModelField queryModelField = new QueryModelMeta.QueryModelField();
-								queryModelField.setType(v.getType().getSimpleName());
+								if (operator == Condition.Operator.isNotNull || operator == Condition.Operator.isNull){
+									queryModelField.setType("Boolean");
+								}else {
+									queryModelField.setType(v.getType().getSimpleName());
+								}
 								queryModelField.setName(v.getName() + operator.getName());
 								io.github.itliwei.generator.annotation.Field field = v.getAnnotation(io.github.itliwei.generator.annotation.Field.class);
 								if (field != null && !"".equals(field.label())) {

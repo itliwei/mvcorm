@@ -59,4 +59,8 @@ public class BaseService<T> {
     public <T extends IdEntity> int delete(QueryModel queryModel){
         return cService.delete((Class<T>)getTClass(),queryModel);
     }
+
+    public <T extends IdEntity> long count(QueryModel queryModel){
+        return cService.count((Class<T>)getTClass(),queryModel);
+    }
 }
